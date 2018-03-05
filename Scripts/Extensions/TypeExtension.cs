@@ -23,10 +23,13 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
 
         public static DataSectionEnum Section(this System.Type t) {
             var div = Division(t);
+
             switch (div) {
                 case DataDivisionEnum.Class:
                     if (typeof(IList).IsAssignableFrom(t))
                         return DataSectionEnum.Class_IList;
+                    else if (t == typeof(string))
+                        return DataSectionEnum.Class_String;
                     return DataSectionEnum.Class_UserDefined;
 
                 case DataDivisionEnum.ValueType:
@@ -53,6 +56,14 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
         }
         public static DataSectionEnum Section<S>(this S obj) {
             return Section(typeof(S));
+        }
+        public static DataSectionEnum Section(this FieldInfo f) {
+            return Section(f.FieldType);
+        }
+        public static string Dump<S>(this S obj) {
+            var t = typeof(S);
+            return string.Format("array={0} class={1} enum={2} primitive={3} valuetype={4}",
+                t.IsArray, t.IsClass, t.IsEnum, t.IsPrimitive, t.IsValueType);
         }
     }
 }

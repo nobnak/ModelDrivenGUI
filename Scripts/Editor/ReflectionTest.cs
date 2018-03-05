@@ -22,6 +22,8 @@ namespace ModelDrivenGUISystem {
             Assert.AreEqual(
                 DataSectionEnum.Primitive_Int,
                 data.serializeFieldInt.Section());
+
+            Debug.Log(data.stringField.Dump());
         }
 
         public struct SomeStruct {
@@ -36,6 +38,7 @@ namespace ModelDrivenGUISystem {
             public SomeStruct someStruct;
 
             public int serializeFieldInt;
+            public string stringField;
         }
     }
 }

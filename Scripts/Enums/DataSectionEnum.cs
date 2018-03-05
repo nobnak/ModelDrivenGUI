@@ -10,6 +10,7 @@
         ValueType_Vector,
         ValueType_VectorInt,
         Class_UserDefined,
-        Class_IList
+        Class_IList,
+        Class_String
     }
 }
