@@ -6,11 +6,12 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.View {
 
     public class IntView : BaseView {
+        public ReactiveProperty<string> Input { get; set; }
 
-        public void Draw(ReactiveProperty<string> view) {
+        public override void Draw() {
             using (new GUILayout.HorizontalScope()) {
                 GUILayout.Label(Title, GUILayout.ExpandWidth(false));
-                view.Value = GUILayout.TextField(view.Value);
+                Input.Value = GUILayout.TextField(Input.Value);
             }
         }
     }

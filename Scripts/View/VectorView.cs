@@ -6,12 +6,13 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.View {
 
     public class VectorView : BaseView {
+        public virtual ReactiveCollection<string> Input { get; set; }
 
-        public void Draw(ReactiveCollection<string> view) {
+        public override void Draw() {
             using (new GUILayout.HorizontalScope()) {
                 GUILayout.Label(Title, GUILayout.ExpandWidth(false));
-                for (var i = 0; i < view.Count; i++)
-                    view[i] = GUILayout.TextField(view[i]);
+                for (var i = 0; i < Input.Count; i++)
+                    Input[i] = GUILayout.TextField(Input[i]);
             }
         }
     }
