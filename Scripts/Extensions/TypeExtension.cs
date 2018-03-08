@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Reflection;
 using UnityEngine;
 
@@ -79,6 +80,16 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
                 return VectorTypeEnum.Vector3Int;
             return VectorTypeEnum.Unsupported;
 
+        }
+
+        public static string GetMemberName<TField>(Expression<System.Func<TField>> memberAccess) {
+            return ((MemberExpression)memberAccess.Body).Member.Name;
+        }
+        public static string GetMemberName<T, TField>(this T t, Expression<System.Func<T, TField>> memberAccess) {
+            return ((MemberExpression)memberAccess.Body).Member.Name;
+        }
+        public static FieldInfo GetField<T, TField>(this T t, Expression<System.Func<T, TField>> memberAccess) {
+            return typeof(T).GetField(t.GetMemberName(memberAccess));
         }
     }
 }

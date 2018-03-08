@@ -286,9 +286,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b7ea85389ad4e4b80050a79a06bff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model:
-    intfield01: -1
-    vec4field01: {x: 1, y: 2, z: 3, w: 0}
+  data:
+    bool01: 0
+    enum01: 0
+    int01: 0
+    float01: 1
+    vec401: {x: 2, y: 3, z: 4, w: 5}
+    innerClass01:
+      int01: 6
+    innerClass02:
+      int01: 7
 --- !u!4 &1757799412
 Transform:
   m_ObjectHideFlags: 0

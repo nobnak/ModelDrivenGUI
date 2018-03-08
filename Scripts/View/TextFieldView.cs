@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ModelDrivenGUISystem.View {
 
-    public class IntView : BaseView {
+    public class TextFieldView : BaseView {
         public ReactiveProperty<string> Input { get; set; }
 
         public override void Draw() {

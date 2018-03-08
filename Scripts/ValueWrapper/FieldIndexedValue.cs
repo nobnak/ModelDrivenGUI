@@ -15,22 +15,4 @@ namespace ModelDrivenGUISystem.ValueWrapper {
 
         public abstract int CountElement { get; }
     }
-
-    public class Vector4Accessor : FieldIndexedValue<Vector4, float> {
-        public Vector4Accessor(object parent, FieldInfo field) : base(parent, field) {}
-
-        public override float this[int index] {
-            get { return Value[index]; }
-            set {
-                var v = Value;
-                v[index] = value;
-                Value = v;
-            }
-        }
-        public override int CountElement {
-            get {
-                return 4;
-            }
-        }
-    }
 }
