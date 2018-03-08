@@ -35,8 +35,20 @@ namespace ModelDrivenGUISystem.Examples {
         }
 
         [System.Serializable]
-        public class InnerModel {
+        public class InnerInnerModel {
+            public bool bool01;
+            public string string01;
             public int int01;
+            public float float01;
+        }
+        [System.Serializable]
+        public class InnerModel {
+            public bool bool01;
+            public string string01;
+            public int int01;
+            public float float01;
+
+            public InnerInnerModel innerInner;
         }
         [System.Serializable]
         public class Model {
@@ -51,8 +63,8 @@ namespace ModelDrivenGUISystem.Examples {
             public Vector3 vec3_01;
             public Vector4 vec4_01;
             public Vector2Int vec2int01;
+
             public InnerModel innerClass01;
-            public InnerModel innerClass02;
         }
     }
 }
