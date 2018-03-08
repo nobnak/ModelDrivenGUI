@@ -1,5 +1,7 @@
-﻿using ModelDrivenGUISystem.View;
+﻿using ModelDrivenGUISystem.ValueWrapper;
+using ModelDrivenGUISystem.View;
 using ModelDrivenGUISystem.ViewModel;
+using System.Linq.Expressions;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.Examples {
@@ -12,7 +14,8 @@ namespace ModelDrivenGUISystem.Examples {
 
         private void OnEnable() {
             window = new Rect(10f, 10f, 200f, 300f);
-            view = ClassConfigurator.GenerateClassView(model);
+            var f = new FieldValue<object>(this, this.GetType().GetField(MemberName(() => model)));
+            view = ClassConfigurator.GenerateClassView(f);
         }
         private void OnDisable() {
             if (view != null) {
@@ -26,6 +29,10 @@ namespace ModelDrivenGUISystem.Examples {
         private void Window(int id) {
             view.Draw();
             GUI.DragWindow();
+        }
+
+        public static string MemberName<T>(Expression<System.Func<T>> memberAccess) {
+            return ((MemberExpression)memberAccess.Body).Member.Name;
         }
 
         [System.Serializable]

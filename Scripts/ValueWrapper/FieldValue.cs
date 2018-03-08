@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace ModelDrivenGUISystem.ValueWrapper {
     
-    public class FieldValue<ValueType> : IValue<ValueType> {
+    public class FieldValue<ValueType> : IFieldValue<ValueType> {
         public virtual object Parent { get; protected set; }
         public virtual FieldInfo Field { get; protected set; }
 

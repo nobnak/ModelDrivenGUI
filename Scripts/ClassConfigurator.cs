@@ -13,13 +13,13 @@ namespace ModelDrivenGUISystem {
 
     public static class ClassConfigurator {
 
-        public static BaseView GenerateClassView(object parent) {
+        public static BaseView GenerateClassView(IFieldValue<object> parent) {
             var views = new List<BaseView>();
 
-            foreach (var f in parent.Fields()) {
+            foreach (var f in parent.Value.Fields()) {
                 switch (f.Section()) {
                     case DataSectionEnum.Primitive_Int: {
-                            var model = new FieldValue<int>(parent, f);
+                            var model = new FieldValue<int>(parent.Value, f);
                             var vm = new IntViewModel(model);
                             var view = new IntView() { Title = f.Name };
                             view.Input = vm.Output;
@@ -30,7 +30,7 @@ namespace ModelDrivenGUISystem {
                     case DataSectionEnum.ValueType_Vector:
                         switch (f.VectorType()) {
                             case VectorTypeEnum.Vector4: {
-                                    var model = new FieldValue<Vector4>(parent, f);
+                                    var model = new FieldValue<Vector4>(parent.Value, f);
                                     var vm = new Vector4ViewModel(model);
                                     var view = new VectorView() { Title = f.Name };
                                     view.Input = vm.Output;
@@ -41,8 +41,8 @@ namespace ModelDrivenGUISystem {
                         break;
 
                     case DataSectionEnum.Class_UserDefined: {
-                            var model = new FieldValue<object>(parent, f);
-                            var view = GenerateClassView(model.Value);
+                            var model = new FieldValue<object>(parent.Value, f);
+                            var view = GenerateClassView(model);
                             views.Add(view);
                             break;
                         }
