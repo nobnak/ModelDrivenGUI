@@ -22,6 +22,15 @@ namespace ModelDrivenGUISystem {
 
             foreach (var f in parentModel.Value.Fields()) {
                 switch (f.Section()) {
+                    case DataSectionEnum.Primitive_Bool: {
+                            var model = new FieldValue<bool>(parentModel.Value, f);
+                            var vm = new BypassViewModel<bool>(model);
+                            var view = viewFactory.CreateBoolView(model, vm);
+                            view.Title = f.Name;
+                            views.Add(view);
+                            break;
+                        }
+
                     case DataSectionEnum.Primitive_Int: {
                             var model = new FieldValue<int>(parentModel.Value, f);
                             var accessor = new IntAccessor();
@@ -41,6 +50,27 @@ namespace ModelDrivenGUISystem {
                             views.Add(view);
                             break;
                         }
+
+                    case DataSectionEnum.Class_String: {
+                            var model = new FieldValue<string>(parentModel.Value, f);
+                            var accessor = new FloatAccessor();
+                            var vm = new BypassViewModel<string>(model);
+                            var view = viewFactory.CreateStringView(model, vm);
+                            view.Title = f.Name;
+                            views.Add(view);
+                            break;
+                        }
+
+                    case DataSectionEnum.ValueType_Enum: {
+                            var model = new FieldValue<object>(parentModel.Value, f);
+                            var accessor = new EnumAccessor(f.FieldType);
+                            var vm = new NumberViewModel<object>(model, accessor);
+                            var view = viewFactory.CreateEnumView(model, vm);
+                            view.Title = f.Name;
+                            views.Add(view);
+                            break;
+                        }
+
 
                     case DataSectionEnum.ValueType_Vector:
                         switch (f.VectorType()) {

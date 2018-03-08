@@ -288,10 +288,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     bool01: 0
-    enum01: 0
+    enum01: 1
+    string01: 
     int01: 0
     float01: 1
-    vec401: {x: 2, y: 3, z: 4, w: 5}
+    vec2_01: {x: 0, y: 0}
+    vec3_01: {x: 0, y: 0, z: 0}
+    vec4_01: {x: 0, y: 0, z: 0, w: 0}
+    vec2int01: {x: 0, y: 0}
     innerClass01:
       int01: 6
     innerClass02:

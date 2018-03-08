@@ -12,10 +12,20 @@ namespace ModelDrivenGUISystem.Factory {
             return new ClassView();
         }
 
-        public BaseView CreateFloatView(IFieldValue<float> model, NumberViewModel<float> vm) {
+        public BaseView CreateStringView(IFieldValue<string> model, BypassViewModel<string> vm) {
             return new TextFieldView() { Input = vm.Output };
         }
+        public BaseView CreateEnumView(IFieldValue<object> model, NumberViewModel<object> vm) {
+            return new EnumView() { Input = vm.Output, EnumType = model.Value.GetType() };
+        }
+
+        public BaseView CreateBoolView(FieldValue<bool> model, BypassViewModel<bool> vm) {
+            return new BoolView() { Input = vm.Output };
+        }
         public BaseView CreateIntView(IFieldValue<int> model, NumberViewModel<int> vm) {
+            return new TextFieldView() { Input = vm.Output };
+        }
+        public BaseView CreateFloatView(IFieldValue<float> model, NumberViewModel<float> vm) {
             return new TextFieldView() { Input = vm.Output };
         }
 

@@ -44,6 +44,7 @@ namespace ModelDrivenGUISystem.Examples {
 
             public bool bool01;
             public SimpleEnum enum01;
+            public string string01;
             public int int01;
             public float float01;
             public Vector2 vec2_01;

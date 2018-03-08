@@ -17,4 +17,24 @@ namespace ModelDrivenGUISystem.Accessor {
             return float.TryParse(s, out result);
         }
     }
+
+    public class EnumAccessor : IValueAccessor<object> {
+        public System.Type EnumType { get; set; }
+
+        public EnumAccessor(System.Type enumType) {
+            this.EnumType = enumType;
+        }
+
+        public bool TryParse(string s, out object result) {
+            try {
+                result = System.Enum.Parse(EnumType, s);
+                return true;
+            } catch (System.Exception e) {
+                Debug.LogWarning(e);
+            }
+
+            result = default(object);
+            return false;
+        }
+    }
 }
