@@ -1,8 +1,11 @@
-# ModelDrivenGUI
+# Model Driven GUI Generation for Unity
+
+Supported types:
+ - Primitives (int, float, etc.)
+ - Vector2, Vector3, etc.
+ - User defined classes
 
 ## Usage
-[Sample](ModelDrivenGUI/blob/master/Examples/TestViewModel.cs)
-
 Define data class
 ```csharp
 [System.Serializable]
@@ -31,6 +34,8 @@ var viewFactory = new SimpleViewFactory();
 view = ClassConfigurator.GenerateClassView(model, viewFactory);
 ```
 Call ```view.Draw();``` in MonoBehaviour.OnGUI()
+
+[Sample](ModelDrivenGUI/blob/master/Examples/TestViewModel.cs)
 
 ## Installation
 Import [UniRx](https://www.assetstore.unity3d.com/#!/content/17276) plugin from Unity Asset Store.
