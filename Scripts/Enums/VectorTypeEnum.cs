@@ -8,6 +8,8 @@ namespace ModelDrivenGUISystem {
         Vector3,
         Vector4,
         Vector2Int,
-        Vector3Int
+        Vector3Int,
+        Color,
+        Color32
     }
 }

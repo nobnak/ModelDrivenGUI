@@ -17,7 +17,7 @@ namespace ModelDrivenGUISystem.Examples {
         private void OnEnable() {
             window = new Rect(10f, 10f, 200f, 300f);
             var model = new FieldValue<object>(this, this.GetField(c => c.data));
-            var viewFactory = new ViewFactory();
+            var viewFactory = new SimpleViewFactory();
             view = ClassConfigurator.GenerateClassView(model, viewFactory);
         }
         private void OnDisable() {
@@ -63,6 +63,8 @@ namespace ModelDrivenGUISystem.Examples {
             public Vector3 vec3_01;
             public Vector4 vec4_01;
             public Vector2Int vec2int01;
+
+            public int[] intArray01;
 
             public InnerModel innerClass01;
         }

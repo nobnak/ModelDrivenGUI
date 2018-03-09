@@ -11,16 +11,16 @@ namespace ModelDrivenGUISystem.Factory {
 
         BaseView CreateClassView(IFieldValue<object> model);
 
-        BaseView CreateStringView(IFieldValue<string> model, BypassViewModel<string> vm);
-        BaseView CreateEnumView(IFieldValue<object> model, NumberViewModel<object> vm);
+        BaseView CreateStringView(IFieldValue<object> parent, IFieldValue<string> model);
+        BaseView CreateEnumView(IFieldValue<object> parent, IFieldValue<object> modelm);
 
-        BaseView CreateBoolView(FieldValue<bool> model, BypassViewModel<bool> vm);
-        BaseView CreateIntView(IFieldValue<int> model, NumberViewModel<int> vm);
-        BaseView CreateFloatView(IFieldValue<float> model, NumberViewModel<float> vm);
+        BaseView CreateBoolView(IFieldValue<object> parent, IFieldValue<bool> model);
+        BaseView CreateIntView(IFieldValue<object> parent, IFieldValue<int> model);
+        BaseView CreateFloatView(IFieldValue<object> parent, IFieldValue<float> model);
 
-        BaseView CreateVector2View(IFieldValue<Vector2> model, VectorViewModel<Vector2, float> vm);
-        BaseView CreateVector3View(IFieldValue<Vector3> model, VectorViewModel<Vector3, float> vm);
-        BaseView CreateVector4View(IFieldValue<Vector4> model, VectorViewModel<Vector4, float> vm);
-        BaseView CreateColorView(IFieldValue<Color> model, VectorViewModel<Color, float> vm);
+        BaseView CreateVector2View(IFieldValue<object> parent, IFieldValue<Vector2> model);
+        BaseView CreateVector3View(IFieldValue<object> parent, IFieldValue<Vector3> model);
+        BaseView CreateVector4View(IFieldValue<object> parent, IFieldValue<Vector4> model);
+        BaseView CreateColorView(IFieldValue<object> parent, IFieldValue<Color> model);
     }
 }

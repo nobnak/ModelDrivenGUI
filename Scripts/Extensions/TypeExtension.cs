@@ -11,7 +11,6 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
         public static IEnumerable<FieldInfo> Fields<S>(this S s) {
             return s.GetType().GetFields(BindingFlags.Instance
                 | BindingFlags.Public
-                | BindingFlags.NonPublic
                 | BindingFlags.FlattenHierarchy);
         }
 
@@ -39,10 +38,12 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
                         return DataSectionEnum.ValueType_Enum;
                     else if (t == typeof(Vector2)
                         || t == typeof(Vector3)
-                        || t == typeof(Vector4))
+                        || t == typeof(Vector4)
+                        || t == typeof(Color))
                         return DataSectionEnum.ValueType_Vector;
                     else if (t == typeof(Vector2Int)
-                        || t == typeof(Vector3Int))
+                        || t == typeof(Vector3Int)
+                        || t == typeof(Color32))
                         return DataSectionEnum.ValueType_VectorInt;
                     return DataSectionEnum.ValueType_Struct;
 
@@ -74,10 +75,14 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
                 return VectorTypeEnum.Vector3;
             else if (f.FieldType == typeof(Vector4))
                 return VectorTypeEnum.Vector4;
+            else if (f.FieldType == typeof(Color))
+                return VectorTypeEnum.Color;
             else if (f.FieldType == typeof(Vector2Int))
                 return VectorTypeEnum.Vector2Int;
             else if (f.FieldType == typeof(Vector3Int))
                 return VectorTypeEnum.Vector3Int;
+            else if (f.FieldType == typeof(Color32))
+                return VectorTypeEnum.Color32;
             return VectorTypeEnum.Unsupported;
 
         }
