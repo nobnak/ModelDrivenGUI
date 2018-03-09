@@ -34,11 +34,25 @@ public class Model {
 ```
 Create view from the data
 ```csharp
-var model = new FieldValue<object>(this, this.GetField(c => c.data));
-var viewFactory = new SimpleViewFactory();
-view = ClassConfigurator.GenerateClassView(model, viewFactory);
+public class TestViewModel : MonoBehaviour {
+    public Model data;
+    protected BaseView view;
+    
+    void OnEnable() {
+        var model = new FieldValue<object>(this, this.GetField(c => c.data));
+        var viewFactory = new SimpleViewFactory();
+        view = ClassConfigurator.GenerateClassView(model, viewFactory);
+    }
+    void OnDisable() {
+        view.Dispose();
+    }
 ```
-Call ```view.Draw();``` in MonoBehaviour.OnGUI()
+Call Draw() method in MonoBehaviour.OnGUI()
+```csharp
+    void OnGUI() {
+         view.Draw();
+    }
+```
 
 [Sample](ModelDrivenGUI/blob/master/Examples/TestViewModel.cs)
 
