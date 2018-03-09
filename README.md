@@ -1,6 +1,8 @@
 # ModelDrivenGUI
 
 ## Usage
+[Sample](ModelDrivenGUI/blob/master/Examples/TestViewModel.cs)
+
 Define data class
 ```csharp
 [System.Serializable]
