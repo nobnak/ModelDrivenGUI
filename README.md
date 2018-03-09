@@ -3,7 +3,7 @@
 
 Features:
  - MVVM architecture
- - Customizable GUI(View)
+ - Customizable GUI (View)
 
 Supported types:
  - Primitives (int, float, etc.)
@@ -11,7 +11,7 @@ Supported types:
  - User defined classes
 
 ## Usage
-Define data class
+Define data class (Model)
 ```csharp
 [System.Serializable]
 public class InnerModel {
