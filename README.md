@@ -1,5 +1,9 @@
 # Model Driven GUI Generation for Unity
 
+Features:
+ - MVVM architecture
+ - Customizable GUI(View)
+
 Supported types:
  - Primitives (int, float, etc.)
  - Vector2, Vector3, etc.
