@@ -10,6 +10,8 @@ namespace ModelDrivenGUISystem.View {
         public virtual ReactiveProperty<string> Count { get; set; }
         public virtual ReactiveProperty<BaseView[]> Views { get; set; }
 
+        public virtual ReactiveCommand CommandAdd { get; set; }
+
         protected bool visible = true;
 
         public override void Draw() {
@@ -20,6 +22,10 @@ namespace ModelDrivenGUISystem.View {
                     using (new GUILayout.HorizontalScope()) {
                         GUILayout.Label("Size", GUILayout.ExpandWidth(false));
                         Count.Value = GUILayout.TextField(string.Format("{0}", Count.Value));
+                    }
+                    using (new GUILayout.HorizontalScope()) {
+                        if (GUILayout.Button("Add"))
+                            CommandAdd.Execute();
                     }
                     foreach (var v in Views.Value)
                         v.Draw();

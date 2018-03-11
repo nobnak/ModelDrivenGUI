@@ -23,6 +23,6 @@ namespace ModelDrivenGUISystem.Factory {
         BaseView CreateVector4View(IValue<Vector4> model);
         BaseView CreateColorView(IValue<Color> model);
 
-        BaseView CreateArrayView<T>(IValue<T[]> model);
+        BaseView CreateArrayView<T>(IValue<T[]> model) where T:new();
     }
 }
