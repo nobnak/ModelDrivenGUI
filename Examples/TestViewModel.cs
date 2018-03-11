@@ -1,9 +1,7 @@
-﻿using ModelDrivenGUISystem.Extensions.TypeExt;
+﻿using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
-using ModelDrivenGUISystem.ViewModel;
-using System.Linq.Expressions;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.Examples {
@@ -16,9 +14,8 @@ namespace ModelDrivenGUISystem.Examples {
 
         private void OnEnable() {
             window = new Rect(10f, 10f, 200f, 300f);
-            var model = new FieldValue<object>(this, this.GetField(c => c.data));
             var viewFactory = new SimpleViewFactory();
-            view = ClassConfigurator.GenerateClassView(model, viewFactory);
+            view = ClassConfigurator.GenerateClassView(new BaseValue<object>(data), viewFactory);
         }
         private void OnDisable() {
             if (view != null) {

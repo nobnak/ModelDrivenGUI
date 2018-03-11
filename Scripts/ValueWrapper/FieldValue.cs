@@ -6,20 +6,22 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.ValueWrapper {
     
     public class FieldValue<ValueType> : IFieldValue<ValueType> {
-        public virtual object Parent { get; protected set; }
+        public virtual IValue<object> Parent { get; protected set; }
         public virtual FieldInfo Field { get; protected set; }
 
-        public FieldValue(object parent, FieldInfo field) {
+        public FieldValue(IValue<object> parent, FieldInfo field) {
             this.Parent = parent;
             this.Field = field;
         }
+        public FieldValue(object parent, FieldInfo field) 
+            : this(new BaseValue<object>(parent), field) { }
 
         public virtual ValueType Value {
             get {
-                return (ValueType)Field.GetValue(Parent);
+                return (ValueType)Field.GetValue(Parent.Value);
             }
             set {
-                Field.SetValue(Parent, value);
+                Field.SetValue(Parent.Value, value);
             }
         }
     }

@@ -9,50 +9,55 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.Factory {
 
     public class SimpleViewFactory : IViewFactory {
-        public BaseView CreateClassView(IFieldValue<object> model) {
+        public BaseView CreateClassView(IValue<object> model) {
             return new ClassView();
         }
 
-        public BaseView CreateStringView(IFieldValue<object> parent, IFieldValue<string> model) {
+        public BaseView CreateStringView(IValue<object> parent, IValue<string> model) {
             var vm = new BypassViewModel<string>(model);
             return new TextFieldView() { Input = vm.Output };
         }
-        public BaseView CreateEnumView(IFieldValue<object> parent, IFieldValue<object> model) {
-            var accessor = new EnumAccessor(model.Field.FieldType);
+        public BaseView CreateEnumView(IValue<object> parent, IValue<object> model) {
+            var accessor = new EnumAccessor(model.Value.GetType());
             var vm = new NumberViewModel<object>(model, accessor);
             return new EnumView() { Input = vm.Output, EnumType = model.Value.GetType() };
         }
 
-        public BaseView CreateBoolView(IFieldValue<object> parent, IFieldValue<bool> model) {
+        public BaseView CreateBoolView(IValue<object> parent, IValue<bool> model) {
             var vm = new BypassViewModel<bool>(model);
             return new BoolView() { Input = vm.Output };
         }
-        public BaseView CreateIntView(IFieldValue<object> parent, IFieldValue<int> model) {
+        public BaseView CreateIntView(IValue<object> parent, IValue<int> model) {
             var accessor = new IntAccessor();
             var vm = new NumberViewModel<int>(model, accessor);
             return new TextFieldView() { Input = vm.Output };
         }
-        public BaseView CreateFloatView(IFieldValue<object> parent, IFieldValue<float> model) {
+        public BaseView CreateFloatView(IValue<object> parent, IValue<float> model) {
             var accessor = new FloatAccessor();
             var vm = new NumberViewModel<float>(model, accessor);
             return new TextFieldView() { Input = vm.Output };
         }
 
-        public BaseView CreateVector2View(IFieldValue<object> parent, IFieldValue<Vector2> model) {
+        public BaseView CreateVector2View(IValue<object> parent, IValue<Vector2> model) {
             var vm = new VectorViewModel<Vector2, float>(model, new Vector2Accessor());
             return new VectorView() { Input = vm.Output };
         }
-        public BaseView CreateVector3View(IFieldValue<object> parent, IFieldValue<Vector3> model) {
+        public BaseView CreateVector3View(IValue<object> parent, IValue<Vector3> model) {
             var vm = new VectorViewModel<Vector3, float>(model, new Vector3Accessor());
             return new VectorView() { Input = vm.Output };
         }
-        public BaseView CreateVector4View(IFieldValue<object> parent, IFieldValue<Vector4> model) {
+        public BaseView CreateVector4View(IValue<object> parent, IValue<Vector4> model) {
             var vm = new VectorViewModel<Vector4, float>(model, new Vector4Accessor());
             return new VectorView() { Input = vm.Output };
         }
-        public BaseView CreateColorView(IFieldValue<object> parent, IFieldValue<Color> model) {
+        public BaseView CreateColorView(IValue<object> parent, IValue<Color> model) {
             var vm = new VectorViewModel<Color, float>(model, new ColorAccessor());
             return new VectorView() { Input = vm.Output };
+        }
+
+        public BaseView CreateArrayView<T>(IValue<object> parent, IValue<T[]> model) {
+            var vm = new ArrayViewModel<T>(model, this);
+            return new ArrayView() { Input = vm.Output };
         }
     }
 }

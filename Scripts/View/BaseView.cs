@@ -5,8 +5,8 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.View {
 
     public class BaseView : System.IDisposable {
-        public string Title { get; set; }
-        public IList<BaseView> Children { get; set; }
+        public virtual string Title { get; set; }
+        public virtual IList<BaseView> Children { get; set; }
 
         public virtual void Draw() { }
 

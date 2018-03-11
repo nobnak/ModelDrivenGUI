@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using UnityEngine;
 
-namespace ModelDrivenGUISystem.Extensions.TypeExt {
+namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
 
-    public static class TypeExtension {
+    public static class FieldInfoExtension {
 
         public static IEnumerable<FieldInfo> Fields<S>(this S s) {
             return s.GetType().GetFields(BindingFlags.Instance
@@ -27,8 +27,10 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
 
             switch (div) {
                 case DataDivisionEnum.Class:
-                    if (typeof(IList).IsAssignableFrom(t))
-                        return DataSectionEnum.Class_IList;
+                    if (t.IsArray)
+                        return DataSectionEnum.Class_Array;
+                    else if (typeof(IList<>).IsAssignableFrom(t))
+                        return DataSectionEnum.Class_IListGeneric;
                     else if (t == typeof(string))
                         return DataSectionEnum.Class_String;
                     return DataSectionEnum.Class_UserDefined;
@@ -95,6 +97,24 @@ namespace ModelDrivenGUISystem.Extensions.TypeExt {
         }
         public static FieldInfo GetField<T, TField>(this T t, Expression<System.Func<T, TField>> memberAccess) {
             return typeof(T).GetField(t.GetMemberName(memberAccess));
+        }
+        
+        public static IEnumerable<string> DumpGenericMethodInfo(this MethodInfo mi) {
+            yield return string.Format("Method : {0}\n", mi);
+            yield return string.Format("\tGeneric method definition? {0}\n", mi.IsGenericMethodDefinition);
+            yield return string.Format("\tGeneric method? {0}\n", mi.IsGenericMethod);
+            if (mi.IsGenericMethod) {
+                var typeArguments = mi.GetGenericArguments();
+                yield return string.Format("\nList type arguments ({0}):\n", typeArguments.Length);
+
+                foreach (var tparam in typeArguments) {
+                    if (tparam.IsGenericParameter)
+                        yield return string.Format("\t\tParameter:{0} at {1}, declaring method:{2}\n",
+                            tparam, tparam.GenericParameterPosition, tparam.DeclaringMethod);
+                    else
+                        yield return string.Format("\t\t{0}\n", tparam);
+                }
+            }
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using ModelDrivenGUISystem.Extensions.TypeExt;
+﻿using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ModelDrivenGUISystem {
+namespace ModelDrivenGUISystem.Editor {
 
     public class ReflectionTest {
 
@@ -11,10 +11,10 @@ namespace ModelDrivenGUISystem {
         public void ReflectionTestSimplePasses() {
             var data = new Data();
             Assert.AreEqual(
-                DataSectionEnum.Class_IList,
+                DataSectionEnum.Class_IListGeneric,
                 data.floatList.Section());
             Assert.AreEqual(
-                DataSectionEnum.Class_IList,
+                DataSectionEnum.Class_IListGeneric,
                 data.floatArray.Section());
             Assert.AreEqual(
                 DataSectionEnum.ValueType_Vector,

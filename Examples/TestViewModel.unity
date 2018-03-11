@@ -296,10 +296,17 @@ MonoBehaviour:
     vec3_01: {x: 0, y: 0, z: 0}
     vec4_01: {x: 0, y: 0, z: 0, w: 0}
     vec2int01: {x: 0, y: 0}
+    intArray01: 0000000000000000
     innerClass01:
+      bool01: 0
+      string01: 
       int01: 6
-    innerClass02:
-      int01: 7
+      float01: 0
+      innerInner:
+        bool01: 0
+        string01: 
+        int01: 0
+        float01: 0
 --- !u!4 &1757799412
 Transform:
   m_ObjectHideFlags: 0

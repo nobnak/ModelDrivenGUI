@@ -6,7 +6,7 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.ValueWrapper {
     
     public interface IFieldValue<ValueType> : IValue<ValueType> {
-        object Parent { get; }
+        IValue<object> Parent { get; }
         FieldInfo Field { get; }
     }
 }
