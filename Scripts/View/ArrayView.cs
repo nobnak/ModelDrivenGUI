@@ -7,7 +7,8 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.View {
 
     public class ArrayView : BaseView {
-        public virtual ReactiveCollection<BaseView> Input { get; set; }
+        public virtual ReactiveProperty<string> Count { get; set; }
+        public virtual ReactiveProperty<BaseView[]> Views { get; set; }
 
         protected bool visible = true;
 
@@ -18,9 +19,9 @@ namespace ModelDrivenGUISystem.View {
                 if (visible) {
                     using (new GUILayout.HorizontalScope()) {
                         GUILayout.Label("Size", GUILayout.ExpandWidth(false));
-                        GUILayout.TextField(string.Format("{0}", Input.Count));
+                        Count.Value = GUILayout.TextField(string.Format("{0}", Count.Value));
                     }
-                    foreach (var v in Input)
+                    foreach (var v in Views.Value)
                         v.Draw();
                 }
             }

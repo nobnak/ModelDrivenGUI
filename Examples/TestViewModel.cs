@@ -34,16 +34,10 @@ namespace ModelDrivenGUISystem.Examples {
         [System.Serializable]
         public class InnerInnerModel {
             public bool bool01;
-            public string string01;
-            public int int01;
-            public float float01;
         }
         [System.Serializable]
         public class InnerModel {
             public bool bool01;
-            public string string01;
-            public int int01;
-            public float float01;
 
             public InnerInnerModel innerInner;
         }
@@ -62,6 +56,7 @@ namespace ModelDrivenGUISystem.Examples {
             public Vector2Int vec2int01;
 
             public int[] intArray01;
+            public InnerModel[] innerModelArray01;
 
             public InnerModel innerClass01;
         }

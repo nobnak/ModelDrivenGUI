@@ -14,109 +14,118 @@ namespace ModelDrivenGUISystem {
             var views = new List<BaseView>();
 
             foreach (var f in parentModel.Value.Fields()) {
-                switch (f.Section()) {
-                    case DataSectionEnum.Primitive_Bool: {
-                            var model = new FieldValue<bool>(parentModel, f);
-                            var view = viewFactory.CreateBoolView(parentModel, model);
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-
-                    case DataSectionEnum.Primitive_Int: {
-                            var model = new FieldValue<int>(parentModel, f);
-                            var view = viewFactory.CreateIntView(parentModel, model);
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-
-                    case DataSectionEnum.Primitive_Float: {
-                            var model = new FieldValue<float>(parentModel, f);
-                            var view = viewFactory.CreateFloatView(parentModel, model);
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-
-                    case DataSectionEnum.Class_String: {
-                            var model = new FieldValue<string>(parentModel, f);
-                            var view = viewFactory.CreateStringView(parentModel, model);
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-
-                    case DataSectionEnum.ValueType_Enum: {
-                            var model = new FieldValue<object>(parentModel, f);
-                            var view = viewFactory.CreateEnumView(parentModel, model);
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-
-
-                    case DataSectionEnum.ValueType_Vector:
-                        switch (f.VectorType()) {
-                            case VectorTypeEnum.Vector2: {
-                                    var model = new FieldValue<Vector2>(parentModel, f);
-                                    var view = viewFactory.CreateVector2View(parentModel, model);
-                                    view.Title = f.Name;
-                                    views.Add(view);
-                                    break;
-                                }
-                            case VectorTypeEnum.Vector3: {
-                                    var model = new FieldValue<Vector3>(parentModel, f);
-                                    var view = viewFactory.CreateVector3View(parentModel, model);
-                                    view.Title = f.Name;
-                                    views.Add(view);
-                                    break;
-                                }
-                            case VectorTypeEnum.Vector4: {
-                                    var model = new FieldValue<Vector4>(parentModel, f);
-                                    var view = viewFactory.CreateVector4View(parentModel, model);
-                                    view.Title = f.Name;
-                                    views.Add(view);
-                                    break;
-                                }
-                            case VectorTypeEnum.Color: {
-                                    var model = new FieldValue<Color>(parentModel, f);
-                                    var view = viewFactory.CreateColorView(parentModel, model);
-                                    view.Title = f.Name;
-                                    views.Add(view);
-                                    break;
-                                }
-                        }
-                        break;
-
-                    case DataSectionEnum.Class_UserDefined: {
-                            var model = new FieldValue<object>(parentModel, f);
-                            if (model.Value != null) {
-                                var view = GenerateClassView(model, viewFactory);
-                                views.Add(view);
-                            }
-                            break;
-                        }
-
-                    case DataSectionEnum.Class_Array: {
-                            var modelType = typeof(FieldValue<>).MakeGenericType(f.FieldType);
-                            var model = System.Activator.CreateInstance(
-                                modelType, new object[] { parentModel, f });
-                            var methodCreateView = viewFactory.GetType().GetMethod("CreateArrayView")
-                                .MakeGenericMethod(f.FieldType.GetElementType());
-                            var view = (BaseView)methodCreateView.Invoke(
-                                viewFactory, new object[] { parentModel, model });
-                            view.Title = f.Name;
-                            views.Add(view);
-                            break;
-                        }
-                }
+                var title = f.Name;
+                var fieldType = f.FieldType;
+                var modelFactory = new FieldModelFactory(parentModel, f);
+                views.AddRange(
+                    GenerateFieldView(modelFactory, viewFactory, fieldType, title));
             }
 
             var parentView = viewFactory.CreateClassView(parentModel);
             parentView.Title = parentModel.Value.GetType().Name;
             parentView.Children = views;
             return parentView;
+        }
+
+        public static IEnumerable<BaseView> GenerateFieldView(
+                IModelFactory modelFactory, IViewFactory viewFactory, 
+                System.Type fieldType, string title) {
+
+            switch (fieldType.Section()) {
+                case DataSectionEnum.Primitive_Bool: {
+                        var model = modelFactory.CreateValue<bool>();
+                        var view = viewFactory.CreateBoolView(model);
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+
+                case DataSectionEnum.Primitive_Int: {
+                        var model = modelFactory.CreateValue<int>();
+                        var view = viewFactory.CreateIntView(model);
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+
+                case DataSectionEnum.Primitive_Float: {
+                        var model = modelFactory.CreateValue<float>();
+                        var view = viewFactory.CreateFloatView(model);
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+
+                case DataSectionEnum.Class_String: {
+                        var model = modelFactory.CreateValue<string>();
+                        var view = viewFactory.CreateStringView(model);
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+
+                case DataSectionEnum.ValueType_Enum: {
+                        var model = modelFactory.CreateValue<object>();
+                        var view = viewFactory.CreateEnumView(model);
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+
+
+                case DataSectionEnum.ValueType_Vector:
+                    switch (fieldType.VectorType()) {
+                        case VectorTypeEnum.Vector2: {
+                                var model = modelFactory.CreateValue<Vector2>();
+                                var view = viewFactory.CreateVector2View(model);
+                                view.Title = title;
+                                yield return view;
+                                break;
+                            }
+                        case VectorTypeEnum.Vector3: {
+                                var model = modelFactory.CreateValue<Vector3>();
+                                var view = viewFactory.CreateVector3View(model);
+                                view.Title = title;
+                                yield return view;
+                                break;
+                            }
+                        case VectorTypeEnum.Vector4: {
+                                var model = modelFactory.CreateValue<Vector4>();
+                                var view = viewFactory.CreateVector4View(model);
+                                view.Title = title;
+                                yield return view;
+                                break;
+                            }
+                        case VectorTypeEnum.Color: {
+                                var model = modelFactory.CreateValue<Color>();
+                                var view = viewFactory.CreateColorView(model);
+                                view.Title = title;
+                                yield return view;
+                                break;
+                            }
+                    }
+                    break;
+
+                case DataSectionEnum.Class_UserDefined: {
+                        var model = modelFactory.CreateValue<object>();
+                        if (model.Value != null) {
+                            var view = GenerateClassView(model, viewFactory);
+                            yield return view;
+                        }
+                        break;
+                    }
+
+                case DataSectionEnum.Class_Array: {
+                        var model = modelFactory.CreateValue(fieldType);
+                        var methodCreateView = viewFactory.GetType().GetMethod("CreateArrayView")
+                            .MakeGenericMethod(fieldType.GetElementType());
+                        var view = (BaseView)methodCreateView.Invoke(
+                            viewFactory, new object[] { model });
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
+            }
         }
     }
 }

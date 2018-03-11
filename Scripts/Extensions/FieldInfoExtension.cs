@@ -70,23 +70,26 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
             return string.Format("array={0} class={1} enum={2} primitive={3} valuetype={4}",
                 t.IsArray, t.IsClass, t.IsEnum, t.IsPrimitive, t.IsValueType);
         }
-        public static VectorTypeEnum VectorType(this FieldInfo f) {
-            if (f.FieldType == typeof(Vector2))
+        public static VectorTypeEnum VectorType(this System.Type t) {
+            if (t == typeof(Vector2))
                 return VectorTypeEnum.Vector2;
-            else if (f.FieldType == typeof(Vector3))
+            else if (t == typeof(Vector3))
                 return VectorTypeEnum.Vector3;
-            else if (f.FieldType == typeof(Vector4))
+            else if (t == typeof(Vector4))
                 return VectorTypeEnum.Vector4;
-            else if (f.FieldType == typeof(Color))
+            else if (t == typeof(Color))
                 return VectorTypeEnum.Color;
-            else if (f.FieldType == typeof(Vector2Int))
+            else if (t == typeof(Vector2Int))
                 return VectorTypeEnum.Vector2Int;
-            else if (f.FieldType == typeof(Vector3Int))
+            else if (t == typeof(Vector3Int))
                 return VectorTypeEnum.Vector3Int;
-            else if (f.FieldType == typeof(Color32))
+            else if (t == typeof(Color32))
                 return VectorTypeEnum.Color32;
             return VectorTypeEnum.Unsupported;
 
+        }
+        public static VectorTypeEnum VectorType(this FieldInfo f) {
+            return VectorType(f.FieldType);
         }
 
         public static string GetMemberName<TField>(Expression<System.Func<TField>> memberAccess) {
