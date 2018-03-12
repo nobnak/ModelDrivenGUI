@@ -3,12 +3,13 @@
 
 Features:
  - MVVM architecture
- - Customizable GUI (View)
+ - Factory-based GUI (View)
 
 Supported types:
  - Primitives (int, float, etc.)
  - Vector2, Vector3, etc.
  - User defined classes
+ - Arrays
 
 ## Usage
 Define data class (Model)
@@ -41,7 +42,7 @@ public class TestViewModel : MonoBehaviour {
     void OnEnable() {
         var model = new FieldValue<object>(this, this.GetField(c => c.data));
         var viewFactory = new SimpleViewFactory();
-        view = ClassConfigurator.GenerateClassView(model, viewFactory);
+        view = ClassConfigurator.GenerateClassView(new BaseValue<object>(data), viewFactory);
     }
     void OnDisable() {
         view.Dispose();
