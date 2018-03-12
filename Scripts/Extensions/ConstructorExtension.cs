@@ -7,10 +7,19 @@ namespace ModelDrivenGUISystem.Extensions.ConstructorExt {
 
     public static class ConstructorExtension {
 
+        public static object CreateInstance(this System.Type t) {
+            object instance;
+            if (t.IsArray)
+                instance = System.Array.CreateInstance(t.GetElementType(), 0);
+            else if (t == typeof(string))
+                instance = "";
+            else
+                instance = System.Activator.CreateInstance(t);
+            return instance;
+        }
+
         public static object CreateInstanceHierarchy(this System.Type t) {
-            var instance = (t.IsArray 
-                ? System.Array.CreateInstance(t.GetElementType(), 0)
-                : System.Activator.CreateInstance(t));
+            var instance = CreateInstance(t);
 
             foreach (var f in instance.Fields()) {
                 var typeOfField = f.FieldType;
