@@ -58,7 +58,7 @@ Call Draw() method in MonoBehaviour.OnGUI()
     }
 ```
 
-[Sample](ModelDrivenGUI/blob/master/Examples/TestViewModel.cs)
+[Sample](Examples/TestViewModel.cs)
 
 ## Installation
 Import [UniRx](https://www.assetstore.unity3d.com/#!/content/17276) plugin from Unity Asset Store.
