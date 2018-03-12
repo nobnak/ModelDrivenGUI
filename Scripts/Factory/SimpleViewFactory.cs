@@ -60,7 +60,8 @@ namespace ModelDrivenGUISystem.Factory {
             return new ArrayView() {
                 Views = vm.OutputViews,
                 Count = vm.OutputCount,
-                CommandAdd = vm.CommandAdd
+                CommandAdd = vm.CommandAdd,
+                CommandRemove = vm.CommandRemove
             };
         }
     }

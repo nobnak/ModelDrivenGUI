@@ -11,6 +11,7 @@ namespace ModelDrivenGUISystem.View {
         public virtual ReactiveProperty<BaseView[]> Views { get; set; }
 
         public virtual ReactiveCommand CommandAdd { get; set; }
+        public virtual ReactiveCommand CommandRemove { get; set; }
 
         protected bool visible = true;
 
@@ -19,16 +20,16 @@ namespace ModelDrivenGUISystem.View {
             using (new FoldoutScope(ref visible, Title))
             using (new IndentScope(20f)) {
                 if (visible) {
-                    using (new GUILayout.HorizontalScope()) {
-                        GUILayout.Label("Size", GUILayout.ExpandWidth(false));
-                        Count.Value = GUILayout.TextField(string.Format("{0}", Count.Value));
-                    }
+                    GUILayout.Label(string.Format("Size : {0}",  Count.Value));
                     using (new GUILayout.HorizontalScope()) {
                         if (GUILayout.Button("Add"))
                             CommandAdd.Execute();
+                        if (GUILayout.Button("Remove"))
+                            CommandRemove.Execute();
                     }
-                    foreach (var v in Views.Value)
+                    foreach (var v in Views.Value) {
                         v.Draw();
+                    }
                 }
             }
         }

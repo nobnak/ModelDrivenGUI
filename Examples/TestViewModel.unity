@@ -287,24 +287,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    bool01: 0
-    enum01: 1
-    string01: 
-    int01: 0
-    float01: 1
-    vec2_01: {x: 0, y: 0}
-    vec3_01: {x: 0, y: 0, z: 0}
-    vec4_01: {x: 0, y: 0, z: 0, w: 0}
-    vec2int01: {x: 0, y: 0}
     intArray01: 00000000
-    innerModelArray01:
-    - bool01: 0
-      innerInner:
-        bool01: 0
-    innerClass01:
-      bool01: 0
-      innerInner:
-        bool01: 0
+    innerModelArray01: []
+    innerInnerArray01: []
 --- !u!4 &1757799412
 Transform:
   m_ObjectHideFlags: 0

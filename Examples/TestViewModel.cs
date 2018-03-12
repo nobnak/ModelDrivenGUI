@@ -39,12 +39,12 @@ namespace ModelDrivenGUISystem.Examples {
         public class InnerModel {
             public bool bool01;
 
-            public InnerInnerModel innerInner;
+            public InnerInnerModel innerInner = new InnerInnerModel();
         }
         [System.Serializable]
         public class Model {
             public enum SimpleEnum { One, Two }
-
+#if false
             public bool bool01;
             public SimpleEnum enum01;
             public string string01;
@@ -55,10 +55,11 @@ namespace ModelDrivenGUISystem.Examples {
             public Vector4 vec4_01;
             public Vector2Int vec2int01;
 
-            public int[] intArray01;
-            public InnerModel[] innerModelArray01;
-
             public InnerModel innerClass01;
+#endif
+            public int[] intArray01 = new int[0];
+            public InnerModel[] innerModelArray01 = new InnerModel[0];
+            public InnerInnerModel[] innerInnerArray01 = new InnerInnerModel[0];
         }
     }
 }

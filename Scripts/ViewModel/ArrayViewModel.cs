@@ -15,32 +15,45 @@ namespace ModelDrivenGUISystem.ViewModel {
         public ReactiveProperty<BaseView[]> OutputViews { get; set; }
 
         public ReactiveCommand CommandAdd { get; set; }
+        public ReactiveCommand CommandRemove { get; set; }
 
         public ArrayViewModel(IValue<T[]> model, IViewFactory viewFactory) {
             Input = new ReactiveProperty<T[]>(model.Value);
             Input.Subscribe(v => model.Value = v);
             
-            OutputCount = Input.Select(v => string.Format("{0}", v.Length)).ToReactiveProperty();
-            OutputViews = Input.Select(vs => vs.SelectMany(
-                (v, index) => {
+            OutputCount = Input.Select(t => string.Format("{0}", t.Length)).ToReactiveProperty();
+            OutputViews = Input.Select(ts => {
+                DisposeViews();
+                return ts.SelectMany((t, index) => {
                     var typeOfField = typeof(T);
                     var modelFactory = new ArrayEleentModelFactory(model.Value, index);
                     return ClassConfigurator.GenerateFieldView(
                         modelFactory, viewFactory,
                         typeOfField, string.Format("{0}", index));
-                }).ToArray()).ToReactiveProperty();
+                }).ToArray();
+            }).ToReactiveProperty();
 
-            Debug.LogFormat("OutputCount : {0}", OutputCount);
-            Debug.LogFormat("OutputViews : {0}", OutputViews);
-
-            CommandAdd = new ReactiveCommand();
-            CommandAdd.Subscribe(v => {
+            CommandAdd = Input.Select(ts => ts != null).ToReactiveCommand();
+            CommandAdd.Subscribe(u => {
                 var currSize = Input.Value.Length;
                 var inputArray = Input.Value;
                 System.Array.Resize(ref inputArray, currSize + 1);
                 inputArray[currSize] = new T();
                 Input.Value = inputArray;
             });
+
+            CommandRemove = Input.Select(ts => ts != null && ts.Length > 0).ToReactiveCommand();
+            CommandRemove.Subscribe(u => {
+                var currSize = Input.Value.Length;
+                var inputArray = Input.Value;
+                System.Array.Resize(ref inputArray, currSize - 1);
+                Input.Value = inputArray;
+            });
+        }
+        public void DisposeViews() {
+            if (OutputViews != null && OutputViews.Value != null)
+                foreach (var v in OutputViews.Value)
+                    v.Dispose();
         }
     }
 }
