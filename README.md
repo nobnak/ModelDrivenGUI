@@ -51,7 +51,11 @@ public class TestViewModel : MonoBehaviour {
 Call Draw() method in MonoBehaviour.OnGUI()
 ```csharp
     void OnGUI() {
-         view.Draw();
+        window = GUILayout.Window(GetInstanceID(), window, Window, name);
+    }
+    void Window(int id) {
+        view.Draw();
+        GUI.DragWindow();
     }
 ```
 
