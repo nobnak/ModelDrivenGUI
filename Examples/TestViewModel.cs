@@ -34,12 +34,12 @@ namespace ModelDrivenGUISystem.Examples {
         [System.Serializable]
         public class InnerInnerModel {
             public bool bool01;
+            public int[] intArray01;
         }
         [System.Serializable]
         public class InnerModel {
-            public bool bool01;
-
-            public InnerInnerModel innerInner = new InnerInnerModel();
+            public int[] intArray01;
+            public InnerInnerModel innerInner;
         }
         [System.Serializable]
         public class Model {

@@ -5,6 +5,7 @@ using UniRx;
 using System.Linq;
 using UnityEngine;
 using System.Collections.Generic;
+using ModelDrivenGUISystem.Extensions.ConstructorExt;
 
 namespace ModelDrivenGUISystem.ViewModel {
 
@@ -38,7 +39,7 @@ namespace ModelDrivenGUISystem.ViewModel {
                 var currSize = Input.Value.Length;
                 var inputArray = Input.Value;
                 System.Array.Resize(ref inputArray, currSize + 1);
-                inputArray[currSize] = new T();
+                inputArray[currSize] = ConstructorExtension.CreateInstanceHierarchy<T>();
                 Input.Value = inputArray;
             });
 

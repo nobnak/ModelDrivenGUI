@@ -27,9 +27,9 @@ namespace ModelDrivenGUISystem.View {
                         if (GUILayout.Button("Remove"))
                             CommandRemove.Execute();
                     }
-                    foreach (var v in Views.Value) {
-                        v.Draw();
-                    }
+                    if (Views.Value != null)
+                        foreach (var v in Views.Value)
+                            v.Draw();
                 }
             }
         }
