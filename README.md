@@ -40,7 +40,6 @@ public class TestViewModel : MonoBehaviour {
     protected BaseView view;
     
     void OnEnable() {
-        var model = new FieldValue<object>(this, this.GetField(c => c.data));
         var viewFactory = new SimpleViewFactory();
         view = ClassConfigurator.GenerateClassView(new BaseValue<object>(data), viewFactory);
     }
