@@ -1,5 +1,5 @@
 # Model Driven GUI Generator for Unity
-![Screenshot](screenshot01.png | height=300)
+![Screenshot](screenshot01.png = 300x)
 [![Capture](http://img.youtube.com/vi/pofYBfI8eyM/0.jpg)](https://youtu.be/pofYBfI8eyM)
 
 Features:
