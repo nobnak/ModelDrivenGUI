@@ -1,4 +1,4 @@
-﻿using ModelDrivenGUISystem.Scope;
+using ModelDrivenGUISystem.Scope;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,11 @@ namespace ModelDrivenGUISystem.View {
 
     public class ClassView : BaseView {
 
-        protected bool visible = true;
+        protected bool visible = false;
+
+		public ClassView(bool visible = false) {
+			this.visible = visible;
+		}
 
         public override void Draw() {
             using (new GUILayout.VerticalScope())
