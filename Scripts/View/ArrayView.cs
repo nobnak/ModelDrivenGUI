@@ -1,12 +1,10 @@
-﻿using ModelDrivenGUISystem.Scope;
-using System.Collections;
-using System.Collections.Generic;
+using nobnak.Gist.IMGUI.Scope;
 using UniRx;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.View {
 
-    public class ArrayView : BaseView {
+	public class ArrayView : BaseView {
         public virtual ReactiveProperty<string> Count { get; set; }
         public virtual ReactiveProperty<BaseView[]> Views { get; set; }
 

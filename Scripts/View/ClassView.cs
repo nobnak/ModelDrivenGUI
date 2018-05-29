@@ -1,11 +1,9 @@
-using ModelDrivenGUISystem.Scope;
-using System.Collections;
-using System.Collections.Generic;
+using nobnak.Gist.IMGUI.Scope;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.View {
 
-    public class ClassView : BaseView {
+	public class ClassView : BaseView {
 
         protected bool visible = false;
 
