@@ -17,9 +17,12 @@ namespace ModelDrivenGUISystem.ViewModel {
             this.Accessor = accessor;
 
             Input = new ReactiveProperty<ValueType>(model.Value);
-            Input.Subscribe(v => model.Value = v);
+            Output = new ReactiveProperty<string>(Input.ToString());
 
-            Output = Input.Select(v => v.ToString()).ToReactiveProperty();
+            Input.Subscribe(v => {
+                model.Value = v;
+                Output.Value = v.ToString();
+            });
             Output.Subscribe(v => {
                 ValueType nextValue;
                 if (accessor.TryParse(v, out nextValue))

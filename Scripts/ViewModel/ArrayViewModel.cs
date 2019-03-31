@@ -12,8 +12,8 @@ namespace ModelDrivenGUISystem.ViewModel {
     public class ArrayViewModel<T> : BaseViewModel where T:new() {
 
         public ReactiveProperty<T[]> Input { get; set; }
-        public ReactiveProperty<string> OutputCount { get; set; }
-        public ReactiveProperty<BaseView[]> OutputViews { get; set; }
+        public IReadOnlyReactiveProperty<string> OutputCount { get; set; }
+        public IReadOnlyReactiveProperty<BaseView[]> OutputViews { get; set; }
 
         public ReactiveCommand CommandAdd { get; set; }
         public ReactiveCommand CommandRemove { get; set; }

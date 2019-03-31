@@ -5,8 +5,8 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.View {
 
 	public class ArrayView : BaseView {
-        public virtual ReactiveProperty<string> Count { get; set; }
-        public virtual ReactiveProperty<BaseView[]> Views { get; set; }
+        public virtual IReadOnlyReactiveProperty<string> Count { get; set; }
+        public virtual IReadOnlyReactiveProperty<BaseView[]> Views { get; set; }
 
         public virtual ReactiveCommand CommandAdd { get; set; }
         public virtual ReactiveCommand CommandRemove { get; set; }

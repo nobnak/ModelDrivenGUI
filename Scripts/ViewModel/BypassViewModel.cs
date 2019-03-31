@@ -15,9 +15,12 @@ namespace ModelDrivenGUISystem.ViewModel {
 
         public BypassViewModel(IValue<ValueType> model) {
             Input = new ReactiveProperty<ValueType>(model.Value);
-            Input.Subscribe(v => model.Value = v);
+            Output = new ReactiveProperty<ValueType>(Input.Value);
 
-            Output = Input.ToReactiveProperty();
+            Input.Subscribe(v => {
+                model.Value = v;
+                Output.Value = v;
+            });
             Output.Subscribe(v => Input.Value = v);
         }
     }
