@@ -27,7 +27,7 @@ namespace ModelDrivenGUISystem.ViewModel {
                 DisposeViews();
                 return ts.SelectMany((t, index) => {
                     var typeOfField = typeof(T);
-                    var modelFactory = new ArrayEleentModelFactory(model.Value, index);
+                    var modelFactory = new ArrayElementModelFactory(model.Value, index);
                     return ClassConfigurator.GenerateFieldView(
                         modelFactory, viewFactory,
                         typeOfField, string.Format("{0}", index));

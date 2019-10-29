@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using UnityEngine;
@@ -29,8 +30,11 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
                 case DataDivisionEnum.Class:
                     if (t.IsArray)
                         return DataSectionEnum.Class_Array;
-                    else if (typeof(IList<>).IsAssignableFrom(t))
-                        return DataSectionEnum.Class_IListGeneric;
+                    else if (t.GetInterfaces()
+                        .Any(v => v.IsGenericType 
+                            && (v.GetGenericTypeDefinition() == typeof(IList<>))
+                            ))
+                        return DataSectionEnum.Class_ListGeneric;
                     else if (t == typeof(string))
                         return DataSectionEnum.Class_String;
                     return DataSectionEnum.Class_UserDefined;
@@ -56,6 +60,8 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
                         return DataSectionEnum.Primitive_Float;
                     else if (t == typeof(bool))
                         return DataSectionEnum.Primitive_Bool;
+
+                    Debug.Log($"Primitive type not found : {t}");
                     return DataSectionEnum.Primitive_Other;
             }
         }

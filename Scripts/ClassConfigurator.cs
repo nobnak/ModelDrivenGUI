@@ -125,6 +125,17 @@ namespace ModelDrivenGUISystem {
                         yield return view;
                         break;
                     }
+                case DataSectionEnum.Class_ListGeneric: {
+                        var model = modelFactory.CreateValue(fieldType);
+                        var elementType = fieldType.GetGenericArguments()[0];
+                        var methodCreateView = viewFactory.GetType().GetMethod("CreateListView");
+                        methodCreateView = methodCreateView.MakeGenericMethod(elementType);
+                        var view = (BaseView)methodCreateView.Invoke(
+                            viewFactory, new object[] { model });
+                        view.Title = title;
+                        yield return view;
+                        break;
+                    }
             }
         }
     }

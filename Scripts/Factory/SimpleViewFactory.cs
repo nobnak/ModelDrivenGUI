@@ -55,9 +55,18 @@ namespace ModelDrivenGUISystem.Factory {
             return new VectorView() { Input = vm.Output };
         }
 
-        public virtual BaseView CreateArrayView<T>(IValue<T[]> model) where T:new() {
+        public virtual BaseView CreateArrayView<T>(IValue<T[]> model) where T : new() {
             var vm = new ArrayViewModel<T>(model, this);
             return new ArrayView() {
+                Views = vm.OutputViews,
+                Count = vm.OutputCount,
+                CommandAdd = vm.CommandAdd,
+                CommandRemove = vm.CommandRemove
+            };
+        }
+        public virtual BaseView CreateListView<T>(IValue<List<T>> model) where T : new() {
+            var vm = new ListViewModel<T>(model, this);
+            return new ListView() {
                 Views = vm.OutputViews,
                 Count = vm.OutputCount,
                 CommandAdd = vm.CommandAdd,

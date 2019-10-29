@@ -2,6 +2,7 @@
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.Examples {
@@ -33,24 +34,27 @@ namespace ModelDrivenGUISystem.Examples {
 
         [System.Serializable]
         public class InnerInnerModel {
-            public bool i;
-            public int[] j;
+            public bool bool0;
+            public int[] intArray0;
         }
         [System.Serializable]
         public class InnerModel {
-            public int[] g;
-            public InnerInnerModel h;
+            public int[] int0;
+            public InnerInnerModel innerInnerModel0;
         }
         [System.Serializable]
         public class Model {
             public enum SimpleEnum { One, Two }
-            public int a;
-            public SimpleEnum b;
-            public string c;
+            public int int0;
+            public SimpleEnum simpleEnum0;
+            public string string0;
 
-            public int[] d = new int[0];
-            public InnerModel[] e = new InnerModel[0];
-            public InnerInnerModel[] f = new InnerInnerModel[0];
+            public int[] intArray0 = new int[0];
+            public InnerModel[] innterModelArray0 = new InnerModel[0];
+            public InnerInnerModel[] innerInnerModelArray0 = new InnerInnerModel[0];
+
+            public List<int> intList0 = new List<int>();
+            public List<InnerInnerModel> innerInnerModel0 = new List<InnerInnerModel>();
         }
     }
 }

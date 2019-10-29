@@ -10,7 +10,7 @@
         ValueType_Vector,
         ValueType_VectorInt,
         Class_UserDefined,
-        Class_IListGeneric,
+        Class_ListGeneric,
         Class_String,
         Class_Array
     }

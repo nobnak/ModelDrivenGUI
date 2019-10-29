@@ -1,7 +1,5 @@
 ﻿using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
-using ModelDrivenGUISystem.ViewModel;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,6 +21,7 @@ namespace ModelDrivenGUISystem.Factory {
         BaseView CreateVector4View(IValue<Vector4> model);
         BaseView CreateColorView(IValue<Color> model);
 
-        BaseView CreateArrayView<T>(IValue<T[]> model) where T:new();
+        BaseView CreateArrayView<T>(IValue<T[]> model) where T : new();
+        BaseView CreateListView<T>(IValue<List<T>> model) where T : new();
     }
 }

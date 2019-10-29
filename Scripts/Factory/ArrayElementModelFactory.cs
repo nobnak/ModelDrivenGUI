@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace ModelDrivenGUISystem.Factory {
 
-    public class ArrayEleentModelFactory : IModelFactory {
+    public class ArrayElementModelFactory : IModelFactory {
         public System.Array Array { get; set; }
         public int Index { get; set; }
 
-        public ArrayEleentModelFactory(System.Array array, int index) {
+        public ArrayElementModelFactory(System.Array array, int index) {
             this.Array = array;
             this.Index = index;
         }
