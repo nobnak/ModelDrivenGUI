@@ -55,6 +55,23 @@ namespace ModelDrivenGUISystem.Examples {
 
             public List<int> intList0 = new List<int>();
             public List<InnerInnerModel> innerInnerModel0 = new List<InnerInnerModel>();
+            public StepAndCurveData stepData0 = new StepAndCurveData();
+        }
+
+
+        [System.Serializable]
+        public class RouteInfo {
+            public List<Vector3> points = new List<Vector3>();
+            public List<int> indices = new List<int>();
+            public string connections;
+        }
+        [System.Serializable]
+        public class RouteMap {
+            public List<RouteInfo> routes = new List<RouteInfo>();
+        }
+        [System.Serializable]
+        public class StepAndCurveData {
+            public RouteMap routes = new RouteMap();
         }
     }
 }

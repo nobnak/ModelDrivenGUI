@@ -28,8 +28,7 @@ namespace ModelDrivenGUISystem.ViewModel {
                 var views = new List<BaseView>();
                 try {
                     for (var i = 0; i < ts.Count; i++) {
-                        var modelFactory = new ListElementModelFactory(
-                            model.Value.Cast<object>().ToList(), i);
+                        var modelFactory = new ListElementModelFactory(model.Value, i);
                         views.AddRange(
                             ClassConfigurator.GenerateFieldView(
                                 modelFactory, viewFactory,

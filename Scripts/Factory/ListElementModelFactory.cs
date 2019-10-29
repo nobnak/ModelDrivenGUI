@@ -7,10 +7,10 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.Factory {
 
     public class ListElementModelFactory : IModelFactory {
-        public List<object> list { get; set; }
+        public IList list { get; set; }
         public int Index { get; set; }
 
-        public ListElementModelFactory(List<object> list, int index) {
+        public ListElementModelFactory(IList list, int index) {
             this.list = list;
             this.Index = index;
         }

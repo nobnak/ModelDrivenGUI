@@ -6,10 +6,10 @@ using UnityEngine;
 namespace ModelDrivenGUISystem.ValueWrapper {
 
     public class ListElementValue<ValueType> : IValue<ValueType> {
-        public List<object> List { get; set; }
+        public IList List { get; set; }
         public int Index { get; set; }
 
-        public ListElementValue(List<object> list, int index) {
+        public ListElementValue(IList list, int index) {
             this.List = list;
             this.Index = index;
         }
