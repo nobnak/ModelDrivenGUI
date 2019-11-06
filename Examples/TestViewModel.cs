@@ -1,4 +1,5 @@
-﻿using ModelDrivenGUISystem.Extensions.FieldInfoExt;
+﻿using ModelDrivenGUISystem.Attributes;
+using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
@@ -43,8 +44,10 @@ namespace ModelDrivenGUISystem.Examples {
             public InnerInnerModel innerInnerModel0;
         }
         [System.Serializable]
+        [Title("Custom model name")]
         public class Model {
             public enum SimpleEnum { One, Two }
+            [Title("Custum int name")]
             public int int0;
             public SimpleEnum simpleEnum0;
             public string string0;

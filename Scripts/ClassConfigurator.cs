@@ -1,28 +1,34 @@
-﻿using ModelDrivenGUISystem.Extensions.FieldInfoExt;
+﻿using ModelDrivenGUISystem.Attributes;
+using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
+using CustomData = System.Collections.Generic.Dictionary<string, object>;
 
 namespace ModelDrivenGUISystem {
 
     public static class ClassConfigurator {
+        public const string CD_ATTRIBUTES = "Attributes";
 
         public static BaseView GenerateClassView(IValue<object> parentModel, IViewFactory viewFactory) {
 
             var views = new List<BaseView>();
 
             foreach (var f in parentModel.Value.Fields()) {
-                var title = f.Name;
+                var title = f.GetTitle();
                 var fieldType = f.FieldType;
                 var modelFactory = new FieldModelFactory(parentModel, f);
                 views.AddRange(
                     GenerateFieldView(modelFactory, viewFactory, fieldType, title));
             }
 
-            var parentView = viewFactory.CreateClassView(parentModel);
-            parentView.Title = parentModel.Value.GetType().Name;
+            var classType = parentModel.Value.GetType();
+            var customData = classType.GenerateCustomData();
+            var parentView = viewFactory.CreateClassView(parentModel, customData);
+            parentView.Title = classType.GetTitle();
             parentView.Children = views;
             return parentView;
         }
@@ -31,10 +37,12 @@ namespace ModelDrivenGUISystem {
                 IModelFactory modelFactory, IViewFactory viewFactory, 
                 System.Type fieldType, string title) {
 
+            var customData = fieldType.GenerateCustomData();
+
             switch (fieldType.Section()) {
                 case DataSectionEnum.Primitive_Bool: {
                         var model = modelFactory.CreateValue<bool>();
-                        var view = viewFactory.CreateBoolView(model);
+                        var view = viewFactory.CreateBoolView(model, customData);
                         view.Title = title;
                         yield return view;
                         break;
@@ -42,7 +50,7 @@ namespace ModelDrivenGUISystem {
 
                 case DataSectionEnum.Primitive_Int: {
                         var model = modelFactory.CreateValue<int>();
-                        var view = viewFactory.CreateIntView(model);
+                        var view = viewFactory.CreateIntView(model, customData);
                         view.Title = title;
                         yield return view;
                         break;
@@ -50,7 +58,7 @@ namespace ModelDrivenGUISystem {
 
                 case DataSectionEnum.Primitive_Float: {
                         var model = modelFactory.CreateValue<float>();
-                        var view = viewFactory.CreateFloatView(model);
+                        var view = viewFactory.CreateFloatView(model, customData);
                         view.Title = title;
                         yield return view;
                         break;
@@ -58,7 +66,7 @@ namespace ModelDrivenGUISystem {
 
                 case DataSectionEnum.Class_String: {
                         var model = modelFactory.CreateValue<string>();
-                        var view = viewFactory.CreateStringView(model);
+                        var view = viewFactory.CreateStringView(model, customData);
                         view.Title = title;
                         yield return view;
                         break;
@@ -66,7 +74,7 @@ namespace ModelDrivenGUISystem {
 
                 case DataSectionEnum.ValueType_Enum: {
                         var model = modelFactory.CreateValue<object>();
-                        var view = viewFactory.CreateEnumView(model);
+                        var view = viewFactory.CreateEnumView(model, customData);
                         view.Title = title;
                         yield return view;
                         break;
@@ -77,28 +85,28 @@ namespace ModelDrivenGUISystem {
                     switch (fieldType.VectorType()) {
                         case VectorTypeEnum.Vector2: {
                                 var model = modelFactory.CreateValue<Vector2>();
-                                var view = viewFactory.CreateVector2View(model);
+                                var view = viewFactory.CreateVector2View(model, customData);
                                 view.Title = title;
                                 yield return view;
                                 break;
                             }
                         case VectorTypeEnum.Vector3: {
                                 var model = modelFactory.CreateValue<Vector3>();
-                                var view = viewFactory.CreateVector3View(model);
+                                var view = viewFactory.CreateVector3View(model, customData);
                                 view.Title = title;
                                 yield return view;
                                 break;
                             }
                         case VectorTypeEnum.Vector4: {
                                 var model = modelFactory.CreateValue<Vector4>();
-                                var view = viewFactory.CreateVector4View(model);
+                                var view = viewFactory.CreateVector4View(model, customData);
                                 view.Title = title;
                                 yield return view;
                                 break;
                             }
                         case VectorTypeEnum.Color: {
                                 var model = modelFactory.CreateValue<Color>();
-                                var view = viewFactory.CreateColorView(model);
+                                var view = viewFactory.CreateColorView(model, customData);
                                 view.Title = title;
                                 yield return view;
                                 break;
@@ -120,7 +128,7 @@ namespace ModelDrivenGUISystem {
                         var methodCreateView = viewFactory.GetType().GetMethod("CreateArrayView")
                             .MakeGenericMethod(fieldType.GetElementType());
                         var view = (BaseView)methodCreateView.Invoke(
-                            viewFactory, new object[] { model });
+                            viewFactory, new object[] { model, customData });
                         view.Title = title;
                         yield return view;
                         break;
@@ -131,12 +139,23 @@ namespace ModelDrivenGUISystem {
                         var methodCreateView = viewFactory.GetType().GetMethod("CreateListView");
                         methodCreateView = methodCreateView.MakeGenericMethod(elementType);
                         var view = (BaseView)methodCreateView.Invoke(
-                            viewFactory, new object[] { model });
+                            viewFactory, new object[] { model, customData });
                         view.Title = title;
                         yield return view;
                         break;
                     }
             }
+        }
+        public static CustomData GenerateCustomData(this MemberInfo info) {
+            var attributes = System.Attribute.GetCustomAttributes(info);
+            var result = new CustomData();
+            result[CD_ATTRIBUTES] = attributes;
+            return result;
+        }
+        public static string GetTitle(this MemberInfo info) {
+            var titleAttr = info.GetCustomAttribute(typeof(TitleAttribute)) as TitleAttribute;
+            var title = (titleAttr == null) ? info.GetType().Name : titleAttr.title;
+            return title;
         }
     }
 }
