@@ -14,8 +14,11 @@ namespace ModelDrivenGUISystem {
         public const string CD_ATTRIBUTES = "Attributes";
 
         public static BaseView GenerateClassView(IValue<object> parentModel, IViewFactory viewFactory) {
-
+            var classType = parentModel.Value.GetType();
+            var customData = classType.GenerateCustomData();
             var views = new List<BaseView>();
+
+            if (classType.)
 
             foreach (var f in parentModel.Value.Fields()) {
                 var title = f.GetTitle();
@@ -25,8 +28,6 @@ namespace ModelDrivenGUISystem {
                     GenerateFieldView(modelFactory, viewFactory, fieldType, title));
             }
 
-            var classType = parentModel.Value.GetType();
-            var customData = classType.GenerateCustomData();
             var parentView = viewFactory.CreateClassView(parentModel, customData);
             parentView.Title = classType.GetTitle();
             parentView.Children = views;
@@ -154,7 +155,7 @@ namespace ModelDrivenGUISystem {
         }
         public static string GetTitle(this MemberInfo info) {
             var titleAttr = info.GetCustomAttribute(typeof(TitleAttribute)) as TitleAttribute;
-            var title = (titleAttr == null) ? info.GetType().Name : titleAttr.title;
+            var title = (titleAttr == null) ? info.Name : titleAttr.title;
             return title;
         }
     }
