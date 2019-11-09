@@ -13,6 +13,14 @@ namespace ModelDrivenGUISystem.View {
 
         protected bool visible = true;
 
+        public override void Initialize() {
+            if (initialized)
+                return;
+            base.Initialize();
+
+            foreach (var v in Views.Value)
+                v.Initialize();
+        }
         public override void Draw() {
             using (new GUILayout.VerticalScope())
             using (new FoldoutScope(ref visible, Title))

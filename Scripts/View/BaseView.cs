@@ -11,6 +11,11 @@ namespace ModelDrivenGUISystem.View {
         public virtual IList<BaseView> Children { get; set; }
         public virtual CustomData CustomData { get; set; }
 
+        protected bool initialized;
+
+        public virtual void Initialize() {
+            initialized = true;
+        }
         public virtual void Draw() { }
 
         public virtual void Dispose() {

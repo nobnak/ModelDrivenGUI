@@ -105,5 +105,10 @@ namespace ModelDrivenGUISystem.Factory {
                 CustomData = customData
             };
         }
+        public virtual BaseView CreateLabelView(CustomData customData = null) {
+            return new LabelView() {
+                CustomData = customData
+            };
+        }
     }
 }

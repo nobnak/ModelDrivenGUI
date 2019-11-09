@@ -3,6 +3,7 @@ using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
+using nobnak.Gist.Extensions.CustomAttrExt;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
@@ -11,6 +12,7 @@ using CustomData = System.Collections.Generic.Dictionary<string, object>;
 namespace ModelDrivenGUISystem {
 
     public static class ClassConfigurator {
+        public const string CD_MODEL = "Model";
         public const string CD_ATTRIBUTES = "Attributes";
 
         public static BaseView GenerateClassView(IValue<object> parentModel, IViewFactory viewFactory) {
@@ -18,7 +20,7 @@ namespace ModelDrivenGUISystem {
             var customData = classType.GenerateCustomData();
             var views = new List<BaseView>();
 
-            if (classType.)
+            views.AddRange(classType.GenerateMemberComment(viewFactory, customData));
 
             foreach (var f in parentModel.Value.Fields()) {
                 var title = f.GetTitle();
@@ -35,7 +37,7 @@ namespace ModelDrivenGUISystem {
         }
 
         public static IEnumerable<BaseView> GenerateFieldView(
-                IModelFactory modelFactory, IViewFactory viewFactory, 
+                IModelFactory modelFactory, IViewFactory viewFactory,
                 System.Type fieldType, string title) {
 
             var customData = fieldType.GenerateCustomData();
@@ -148,15 +150,26 @@ namespace ModelDrivenGUISystem {
             }
         }
         public static CustomData GenerateCustomData(this MemberInfo info) {
-            var attributes = System.Attribute.GetCustomAttributes(info);
+            var attributes = info.GetCustomAttributes();
             var result = new CustomData();
             result[CD_ATTRIBUTES] = attributes;
             return result;
         }
         public static string GetTitle(this MemberInfo info) {
-            var titleAttr = info.GetCustomAttribute(typeof(TitleAttribute)) as TitleAttribute;
+            var titleAttr = info.GetCustomAttribute<TitleAttribute>();
             var title = (titleAttr == null) ? info.Name : titleAttr.title;
             return title;
+        }
+        public static IEnumerable<BaseView> GenerateMemberComment(
+            this MemberInfo info, IViewFactory viewFactory, CustomData customData) {
+
+            var attr = default(CommentAttribute);
+            if (info.TryGetAttribute<CommentAttribute>(out attr)) {
+                customData[LabelView.CD_USAGE] = LabelView.UsageEnum.Comment;
+                var comment = viewFactory.CreateLabelView(customData);
+                comment.Title = attr.text;
+                yield return comment;
+            }
         }
     }
 }

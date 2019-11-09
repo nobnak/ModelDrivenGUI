@@ -25,5 +25,7 @@ namespace ModelDrivenGUISystem.Factory {
 
         BaseView CreateArrayView<T>(IValue<T[]> model, CustomData customData = null) where T : new();
         BaseView CreateListView<T>(IValue<List<T>> model, CustomData customData = null) where T : new();
+
+        BaseView CreateLabelView(CustomData customData = null);
     }
 }

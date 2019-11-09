@@ -45,6 +45,7 @@ namespace ModelDrivenGUISystem.Examples {
         }
         [System.Serializable]
         [Title("Custom model name")]
+        [Comment("Comment on model")]
         public class Model {
             public enum SimpleEnum { One, Two }
             [Title("Custum int name")]
