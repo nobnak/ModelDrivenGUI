@@ -44,17 +44,21 @@ namespace ModelDrivenGUISystem.Examples {
             public InnerInnerModel innerInnerModel0;
         }
         [System.Serializable]
-        [Title("Custom model name")]
-        [Comment("Comment on model")]
+        [Title("Model by Title")]
+        [Comment("あれをこれする設定")]
         public class Model {
             public enum SimpleEnum { One, Two }
-            [Title("Custum int name")]
+            [Title("int0 by Title")]
             public int int0;
+            [Comment("あっちをこっちにする")]
             public SimpleEnum simpleEnum0;
+            [Comment("これをどれする")]
             public string string0;
 
             public int[] intArray0 = new int[0];
+            [Comment("あまり使わない設定")]
             public InnerModel[] innterModelArray0 = new InnerModel[0];
+            [Comment("マニアックな設定")]
             public InnerInnerModel[] innerInnerModelArray0 = new InnerInnerModel[0];
 
             public List<int> intList0 = new List<int>();

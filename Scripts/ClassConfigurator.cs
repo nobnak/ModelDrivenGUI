@@ -26,12 +26,15 @@ namespace ModelDrivenGUISystem {
                 var title = f.GetTitle();
                 var fieldType = f.FieldType;
                 var modelFactory = new FieldModelFactory(parentModel, f);
+                var fieldCustomData = f.GenerateCustomData();
                 views.AddRange(
                     GenerateFieldView(modelFactory, viewFactory, fieldType, title));
+                views.AddRange(f.GenerateMemberComment(viewFactory, fieldCustomData));
             }
 
+            var parentTitle = classType.GetTitle();
             var parentView = viewFactory.CreateClassView(parentModel, customData);
-            parentView.Title = classType.GetTitle();
+            parentView.Title = parentTitle;
             parentView.Children = views;
             return parentView;
         }
