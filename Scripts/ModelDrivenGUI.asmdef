@@ -1,8 +1,8 @@
 {
     "name": "ModelDrivenGUI",
     "references": [
-        "GUID:1660ea5965cce314f9c58a7eb6259838",
-        "GUID:560b04d1a97f54a4e82edc0cbbb69285"
+        "nobnak.Gist",
+        "UniRx"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],
@@ -11,6 +11,5 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": []
+    "defineConstraints": []
 }

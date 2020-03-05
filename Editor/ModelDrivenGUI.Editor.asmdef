@@ -1,7 +1,7 @@
 {
     "name": "ModelDrivenGUI.Editor",
     "references": [
-        "GUID:04baea1731b1b374d91088266938baf1"
+        "ModelDrivenGUI"
     ],
     "optionalUnityReferences": [
         "TestAssemblies"
@@ -12,6 +12,5 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": []
+    "defineConstraints": []
 }
