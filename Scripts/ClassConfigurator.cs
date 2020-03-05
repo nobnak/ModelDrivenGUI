@@ -1,4 +1,4 @@
-﻿using ModelDrivenGUISystem.Attributes;
+using ModelDrivenGUISystem.Attributes;
 using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
@@ -124,6 +124,7 @@ namespace ModelDrivenGUISystem {
                         var model = modelFactory.CreateValue<object>();
                         if (model.Value != null) {
                             var view = GenerateClassView(model, viewFactory);
+							view.Title = title;
                             yield return view;
                         }
                         break;
