@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -45,7 +45,8 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
                     else if (t == typeof(Vector2)
                         || t == typeof(Vector3)
                         || t == typeof(Vector4)
-                        || t == typeof(Color))
+                        || t == typeof(Color)
+						)
                         return DataSectionEnum.ValueType_Vector;
                     else if (t == typeof(Vector2Int)
                         || t == typeof(Vector3Int)
