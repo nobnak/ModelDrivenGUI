@@ -51,7 +51,7 @@ namespace ModelDrivenGUISystem.Examples {
                 Debug.Log($"{name}-{GetType().Name} : Serialized to {folderPath.Folder}");
 
                 var exhibitors = exhitFolder.exhibitors;
-                tabNames = exhibitors.Select(v => v.name).ToArray();
+                tabNames = exhibitors.Select(v => v.Name).ToArray();
                 var appName = Application.productName.SanitizeFilename();
                 var scene = SceneManager.GetActiveScene();
                 var sceneName = scene.name;
@@ -109,7 +109,7 @@ namespace ModelDrivenGUISystem.Examples {
             var currExhibit = (0 <= selectedTab && selectedTab < exhibitors.Length)
                 ? exhibitors[selectedTab] : null;
             if (currExhibit != null) {
-                using (new GUIChangedScope(()=> currExhibit.ReflectChangeOf(MVVMComponent.View)))
+                using (new GUIChangedScope(() => currExhibit.ReflectChangeOf(MVVMComponent.View)))
                     currExhibit.Draw();
             }
 
