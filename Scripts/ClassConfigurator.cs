@@ -1,4 +1,4 @@
-﻿using ModelDrivenGUISystem.Attributes;
+using ModelDrivenGUISystem.Attributes;
 using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
@@ -88,42 +88,61 @@ namespace ModelDrivenGUISystem {
 
 
                 case DataSectionEnum.ValueType_Vector:
-                    switch (fieldType.VectorType()) {
-                        case VectorTypeEnum.Vector2: {
-                                var model = modelFactory.CreateValue<Vector2>();
-                                var view = viewFactory.CreateVector2View(model, customData);
-                                view.Title = title;
-                                yield return view;
-                                break;
-                            }
-                        case VectorTypeEnum.Vector3: {
-                                var model = modelFactory.CreateValue<Vector3>();
-                                var view = viewFactory.CreateVector3View(model, customData);
-                                view.Title = title;
-                                yield return view;
-                                break;
-                            }
-                        case VectorTypeEnum.Vector4: {
-                                var model = modelFactory.CreateValue<Vector4>();
-                                var view = viewFactory.CreateVector4View(model, customData);
-                                view.Title = title;
-                                yield return view;
-                                break;
-                            }
-                        case VectorTypeEnum.Color: {
-                                var model = modelFactory.CreateValue<Color>();
-                                var view = viewFactory.CreateColorView(model, customData);
-                                view.Title = title;
-                                yield return view;
-                                break;
-                            }
-                    }
+					switch (fieldType.VectorType()) {
+						case VectorTypeEnum.Vector2: {
+								var model = modelFactory.CreateValue<Vector2>();
+								var view = viewFactory.CreateVector2View(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+						case VectorTypeEnum.Vector3: {
+								var model = modelFactory.CreateValue<Vector3>();
+								var view = viewFactory.CreateVector3View(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+						case VectorTypeEnum.Vector4: {
+								var model = modelFactory.CreateValue<Vector4>();
+								var view = viewFactory.CreateVector4View(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+						case VectorTypeEnum.Color: {
+								var model = modelFactory.CreateValue<Color>();
+								var view = viewFactory.CreateColorView(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+					}
+					break;
+				case DataSectionEnum.ValueType_VectorInt:
+					switch (fieldType.VectorType()) {
+						case VectorTypeEnum.Vector2Int: {
+								var model = modelFactory.CreateValue<Vector2Int>();
+								var view = viewFactory.CreateVector2IntView(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+						case VectorTypeEnum.Vector3Int: {
+								var model = modelFactory.CreateValue<Vector3Int>();
+								var view = viewFactory.CreateVector3IntView(model, customData);
+								view.Title = title;
+								yield return view;
+								break;
+							}
+					}
                     break;
 
                 case DataSectionEnum.Class_UserDefined: {
                         var model = modelFactory.CreateValue<object>();
                         if (model.Value != null) {
                             var view = GenerateClassView(model, viewFactory);
+							view.Title = title;
                             yield return view;
                         }
                         break;

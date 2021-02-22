@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using ModelDrivenGUISystem.Accessor;
 using ModelDrivenGUISystem.ValueWrapper;
@@ -83,9 +83,23 @@ namespace ModelDrivenGUISystem.Factory {
                 Input = vm.Output,
                 CustomData = customData
             };
-        }
+		}
+		public virtual BaseView CreateVector2IntView(IValue<Vector2Int> model, CustomData customData = null) {
+			var vm = new VectorViewModel<Vector2Int, int>(model, new Vector2IntAccessor());
+			return new VectorView() {
+				Input = vm.Output,
+				CustomData = customData
+			};
+		}
+		public virtual BaseView CreateVector3IntView(IValue<Vector3Int> model, CustomData customData = null) {
+			var vm = new VectorViewModel<Vector3Int, int>(model, new Vector3IntAccessor());
+			return new VectorView() {
+				Input = vm.Output,
+				CustomData = customData
+			};
+		}
 
-        public virtual BaseView CreateArrayView<T>(IValue<T[]> model, CustomData customData = null) where T : new() {
+		public virtual BaseView CreateArrayView<T>(IValue<T[]> model, CustomData customData = null) where T : new() {
             var vm = new ArrayViewModel<T>(model, this);
             return new ArrayView() {
                 Views = vm.OutputViews,

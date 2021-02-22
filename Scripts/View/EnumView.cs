@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -26,11 +26,14 @@ namespace ModelDrivenGUISystem.View {
         }
 
         public override void Draw() {
-            var index = System.Array.FindIndex(names, v => v == Input.Value);
-            index = GUILayout.SelectionGrid(index, names, Mathf.Min(names.Length, NumberOfColums));
-            if (0 <= index && index < names.Length) {
-                Input.Value = names[index];
-            }
+			using (new GUILayout.VerticalScope()) {
+				GUILayout.Label($"{Title}:");
+				var index = System.Array.FindIndex(names, v => v == Input.Value);
+				index = GUILayout.SelectionGrid(index, names, Mathf.Min(names.Length, NumberOfColums));
+				if (0 <= index && index < names.Length) {
+					Input.Value = names[index];
+				}
+			}
         }
     }
 }
