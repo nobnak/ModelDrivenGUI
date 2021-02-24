@@ -1,11 +1,16 @@
-﻿using nobnak.Gist;
+using nobnak.Gist;
+using nobnak.Gist.DocSys;
 using nobnak.Gist.Events;
 using nobnak.Gist.Exhibitor;
 using nobnak.Gist.Extensions.FileExt;
+using nobnak.Gist.Extensions.ReflectionExt;
 using nobnak.Gist.IMGUI.Scope;
 using nobnak.Gist.InputDevice;
 using nobnak.Gist.Loader;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Text;
 using UniRx;
 using UniRx.Diagnostics;
 using UnityEngine;
@@ -148,10 +153,40 @@ namespace ModelDrivenGUISystem.Examples {
         private void NotifyVisibility() {
             NotifyVisibility(isActiveAndEnabled && uiVisibility.Visible);
         }
-        #endregion
+		#endregion
 
-        #region classes
-        [System.Serializable]
+		#region interfaces
+		public IEnumerable<string> GenerateDoc(AbstractExhibitor e) {
+			var root = e.RawData().GetType();
+			foreach (var fi in root.GetInstancePublicFields()) {
+				foreach (var line in fi.GenerateDoc(0)) {
+					yield return line;
+				}
+			}
+		}
+		public IEnumerable<string> GenerateDoc(IEnumerable<AbstractExhibitor> list, int i = 0) {
+			foreach (var e in list) {
+				if (e is ExhibitorGroup) {
+					foreach (var line in GenerateDoc(((ExhibitorGroup)e).Exhibitors, i + 1))
+						yield return line;
+					continue;
+				}
+
+				yield return $"{new string('#', i + 1)} {e.Name} : {e.GetType().GenerateTextFromTooltip()}";
+				foreach (var line in GenerateDoc(e)) {
+					yield return line;
+				}
+			}
+		}
+		public IEnumerable<string> GenerateDoc() {
+			foreach (var line in GenerateDoc(exhitFolder.exhibitors)) {
+				yield return line;
+			}
+		}
+		#endregion
+
+		#region classes
+		[System.Serializable]
         public class ExhibitorFolder {
             public AbstractExhibitor[] exhibitors = new AbstractExhibitor[0];
         }
