@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -37,9 +37,9 @@ namespace ModelDrivenGUISystem.View {
         }
         public override void Draw() {
             if (Style != null)
-                GUILayout.Label(Title, Style);
+                GUILayout.Label(new GUIContent(Title, Tooltip), Style);
             else
-                GUILayout.Label(Title);
+                GUILayout.Label(new GUIContent(Title, Tooltip));
         }
     }
 }

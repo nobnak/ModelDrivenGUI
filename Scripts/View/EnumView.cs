@@ -27,7 +27,7 @@ namespace ModelDrivenGUISystem.View {
 
         public override void Draw() {
 			using (new GUILayout.VerticalScope()) {
-				GUILayout.Label($"{Title}:");
+				GUILayout.Label(new GUIContent($"{Title}:", Tooltip));
 				var index = System.Array.FindIndex(names, v => v == Input.Value);
 				index = GUILayout.SelectionGrid(index, names, Mathf.Min(names.Length, NumberOfColums));
 				if (0 <= index && index < names.Length) {

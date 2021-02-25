@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UniRx;
 using UnityEngine;
@@ -10,7 +10,9 @@ namespace ModelDrivenGUISystem.View {
 
         public override void Draw() {
             using (new GUILayout.HorizontalScope()) {
-                GUILayout.Label(Title, GUILayout.ExpandWidth(false));
+				if (!string.IsNullOrWhiteSpace(Tooltip))
+					Debug.Log($"Title={Title}, Tooltip={Tooltip}");
+                GUILayout.Label(new GUIContent(Title, Tooltip), GUILayout.ExpandWidth(false));
                 Input.Value = GUILayout.TextField(Input.Value);
             }
         }

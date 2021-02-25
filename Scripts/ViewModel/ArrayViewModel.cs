@@ -1,4 +1,4 @@
-﻿using ModelDrivenGUISystem.Factory;
+using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
 using UniRx;
@@ -30,7 +30,7 @@ namespace ModelDrivenGUISystem.ViewModel {
                     var modelFactory = new ArrayElementModelFactory(model.Value, index);
                     return ClassConfigurator.GenerateFieldView(
                         modelFactory, viewFactory,
-                        typeOfField, string.Format("{0}", index));
+                        typeOfField, $"{index}");
                 }).ToArray();
             }).ToReactiveProperty();
 

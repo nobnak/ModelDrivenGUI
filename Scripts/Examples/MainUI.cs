@@ -172,7 +172,7 @@ namespace ModelDrivenGUISystem.Examples {
 					continue;
 				}
 
-				yield return $"{new string('#', i + 1)} {e.Name} : {e.GetType().GenerateTextFromTooltip()}";
+				yield return $"{new string('#', i + 1)} {e.Name} : {e.GetType().GetTooltip()}";
 				foreach (var line in GenerateDoc(e)) {
 					yield return line;
 				}

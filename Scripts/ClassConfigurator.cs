@@ -3,6 +3,7 @@ using ModelDrivenGUISystem.Extensions.FieldInfoExt;
 using ModelDrivenGUISystem.Factory;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
+using nobnak.Gist.DocSys;
 using nobnak.Gist.Extensions.CustomAttrExt;
 using System.Collections.Generic;
 using System.Reflection;
@@ -23,12 +24,10 @@ namespace ModelDrivenGUISystem {
             views.AddRange(classType.GenerateMemberComment(viewFactory, customData));
 
             foreach (var f in parentModel.Value.Fields()) {
-                var title = f.GetTitle();
-                var fieldType = f.FieldType;
                 var modelFactory = new FieldModelFactory(parentModel, f);
                 var fieldCustomData = f.GenerateCustomData();
                 views.AddRange(
-                    GenerateFieldView(modelFactory, viewFactory, fieldType, title));
+                    GenerateFieldView(modelFactory, viewFactory, f));
                 views.AddRange(f.GenerateMemberComment(viewFactory, fieldCustomData));
             }
 
@@ -39,18 +38,31 @@ namespace ModelDrivenGUISystem {
             return parentView;
         }
 
-        public static IEnumerable<BaseView> GenerateFieldView(
-                IModelFactory modelFactory, IViewFactory viewFactory,
-                System.Type fieldType, string title) {
+		public static IEnumerable<BaseView> GenerateFieldView(
+				IModelFactory modelFactory, IViewFactory viewFactory,
+				FieldInfo f) {
 
-            var customData = fieldType.GenerateCustomData();
+			var title = f.GetTitle();
+			var tooltip = f.GetTooltip();
+			var fieldType = f.FieldType;
+
+			return GenerateFieldView(
+				modelFactory, viewFactory,
+				fieldType, title, tooltip);
+		}
+		public static IEnumerable<BaseView> GenerateFieldView(
+		IModelFactory modelFactory, IViewFactory viewFactory,
+		System.Type fieldType, string title = "", string tooltip = "") {
+
+			var customData = fieldType.GenerateCustomData();
 
             switch (fieldType.Section()) {
                 case DataSectionEnum.Primitive_Bool: {
                         var model = modelFactory.CreateValue<bool>();
                         var view = viewFactory.CreateBoolView(model, customData);
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
 
@@ -58,7 +70,8 @@ namespace ModelDrivenGUISystem {
                         var model = modelFactory.CreateValue<int>();
                         var view = viewFactory.CreateIntView(model, customData);
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
 
@@ -66,7 +79,8 @@ namespace ModelDrivenGUISystem {
                         var model = modelFactory.CreateValue<float>();
                         var view = viewFactory.CreateFloatView(model, customData);
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
 
@@ -74,7 +88,8 @@ namespace ModelDrivenGUISystem {
                         var model = modelFactory.CreateValue<string>();
                         var view = viewFactory.CreateStringView(model, customData);
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
 
@@ -82,7 +97,8 @@ namespace ModelDrivenGUISystem {
                         var model = modelFactory.CreateValue<object>();
                         var view = viewFactory.CreateEnumView(model, customData);
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
 
@@ -93,6 +109,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Vector2>();
 								var view = viewFactory.CreateVector2View(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -100,6 +117,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Vector3>();
 								var view = viewFactory.CreateVector3View(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -107,6 +125,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Vector4>();
 								var view = viewFactory.CreateVector4View(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -114,6 +133,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Color>();
 								var view = viewFactory.CreateColorView(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -125,6 +145,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Vector2Int>();
 								var view = viewFactory.CreateVector2IntView(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -132,6 +153,7 @@ namespace ModelDrivenGUISystem {
 								var model = modelFactory.CreateValue<Vector3Int>();
 								var view = viewFactory.CreateVector3IntView(model, customData);
 								view.Title = title;
+								view.Tooltip = tooltip;
 								yield return view;
 								break;
 							}
@@ -143,7 +165,8 @@ namespace ModelDrivenGUISystem {
                         if (model.Value != null) {
                             var view = GenerateClassView(model, viewFactory);
 							view.Title = title;
-                            yield return view;
+							view.Tooltip = tooltip;
+							yield return view;
                         }
                         break;
                     }
@@ -155,7 +178,8 @@ namespace ModelDrivenGUISystem {
                         var view = (BaseView)methodCreateView.Invoke(
                             viewFactory, new object[] { model, customData });
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
                 case DataSectionEnum.Class_ListGeneric: {
@@ -166,7 +190,8 @@ namespace ModelDrivenGUISystem {
                         var view = (BaseView)methodCreateView.Invoke(
                             viewFactory, new object[] { model, customData });
                         view.Title = title;
-                        yield return view;
+						view.Tooltip = tooltip;
+						yield return view;
                         break;
                     }
             }
