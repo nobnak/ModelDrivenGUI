@@ -10,8 +10,6 @@ namespace ModelDrivenGUISystem.View {
 
         public override void Draw() {
             using (new GUILayout.HorizontalScope()) {
-				if (!string.IsNullOrWhiteSpace(Tooltip))
-					Debug.Log($"Title={Title}, Tooltip={Tooltip}");
                 GUILayout.Label(new GUIContent(Title, Tooltip), GUILayout.ExpandWidth(false));
                 Input.Value = GUILayout.TextField(Input.Value);
             }
