@@ -198,7 +198,7 @@ namespace ModelDrivenGUISystem.Examples {
 					continue;
 				}
 
-				yield return $"{new string('#', i + 1)} {e.Name} : {e.GetType().GetTooltip()}";
+				yield return $"{new string('#', i + 1)} {e.Name} : {e.RawData().GetType().GetTooltip()}";
 				foreach (var line in GenerateDoc(e)) {
 					yield return line;
 				}
