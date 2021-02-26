@@ -22,8 +22,8 @@ namespace ModelDrivenGUISystem.View {
                 v.Initialize();
         }
         public override void Draw() {
-            using (new GUILayout.VerticalScope())
-            using (new FoldoutScope(ref visible, Title))
+            using (new GUILayout.VerticalScope(new GUIContent(Title, Tooltip), GUIStyle.none))
+            using (new FoldoutScope(ref visible, Title, Tooltip))
             using (new IndentScope(20f)) {
                 if (visible) {
                     GUILayout.Label(string.Format("Size : {0}",  Count.Value));

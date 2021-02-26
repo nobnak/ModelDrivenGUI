@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UniRx;
 using UnityEngine;
 
@@ -26,8 +27,8 @@ namespace ModelDrivenGUISystem.View {
         }
 
         public override void Draw() {
-			using (new GUILayout.VerticalScope()) {
-				GUILayout.Label(new GUIContent($"{Title}:", Tooltip));
+			using (new GUILayout.VerticalScope(new GUIContent(Title, Tooltip), GUIStyle.none)) {
+				GUILayout.Label($"{Title}:");
 				var index = System.Array.FindIndex(names, v => v == Input.Value);
 				index = GUILayout.SelectionGrid(index, names, Mathf.Min(names.Length, NumberOfColums));
 				if (0 <= index && index < names.Length) {
