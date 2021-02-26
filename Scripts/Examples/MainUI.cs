@@ -120,9 +120,24 @@ namespace ModelDrivenGUISystem.Examples {
 
             GUILayout.EndVertical();
             GUI.DragWindow();
-        }
 
-        private void Save() {
+			if (!string.IsNullOrWhiteSpace(GUI.tooltip)) {
+				var cont = new GUIContent(GUI.tooltip);
+				var size = GUI.skin.label.CalcSize(cont);
+
+				var pos = Input.mousePosition;
+				pos.y = Screen.height - pos.y - size.y;
+
+				var bgcolor = GUI.backgroundColor;
+				GUI.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
+				var style = new GUIStyle(GUI.skin.label);
+				style.normal.background = Texture2D.whiteTexture;
+				GUI.Label(new Rect(pos, size), cont, style);
+				GUI.backgroundColor = bgcolor;
+			}
+		}
+
+		private void Save() {
             Debug.Log($"Save : {GetType().Name}");
             validator.Validate();
             var exhibitors = exhitFolder.exhibitors;
