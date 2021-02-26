@@ -7,6 +7,7 @@ using nobnak.Gist.Extensions.ReflectionExt;
 using nobnak.Gist.IMGUI.Scope;
 using nobnak.Gist.InputDevice;
 using nobnak.Gist.Loader;
+using nobnak.Gist.MathAlgorithms.Extensions.MathExt;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -26,8 +27,10 @@ namespace ModelDrivenGUISystem.Examples {
         protected ExhibitorFolder exhitFolder = new ExhibitorFolder();
         [SerializeField]
         protected FolderPath folderPath = new FolderPath();
+		[SerializeField]
+		protected Tuner tuner = new Tuner();
 
-        [SerializeField]
+		[SerializeField]
         protected BoolEvent visibility = new BoolEvent();
 
         [SerializeField]
@@ -89,6 +92,11 @@ namespace ModelDrivenGUISystem.Examples {
             if (!uiVisibility.Visible)
                 return;
 
+			if (tuner.enableDpiScale) {
+				var scale = Screen.dpi / 96f;
+				GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), Vector2.zero);
+			}
+
             windowRect = GUILayout.Window(GetInstanceID(), windowRect, Window, name);
 
             var currSize = windowRect.size;
@@ -121,22 +129,23 @@ namespace ModelDrivenGUISystem.Examples {
             }
 
             GUILayout.EndVertical();
-            GUI.DragWindow();
 
 			if (!string.IsNullOrWhiteSpace(GUI.tooltip)) {
 				var cont = new GUIContent(GUI.tooltip);
 				var size = GUI.skin.label.CalcSize(cont);
-
-				var pos = Input.mousePosition;
-				pos.y = Screen.height - pos.y - size.y;
+				var pos = Event.current.mousePosition;
+				pos.y -= size.y;
+				var rectTooltip = new Rect(pos, size);
 
 				var bgcolor = GUI.backgroundColor;
 				GUI.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
 				var style = new GUIStyle(GUI.skin.label);
 				style.normal.background = Texture2D.whiteTexture;
-				GUI.Label(new Rect(pos, size), cont, style);
+				GUI.Label(rectTooltip, cont, style);
 				GUI.backgroundColor = bgcolor;
 			}
+
+			GUI.DragWindow();
 		}
 
 		private void Save() {
@@ -207,6 +216,10 @@ namespace ModelDrivenGUISystem.Examples {
         public class ExhibitorFolder {
             public AbstractExhibitor[] exhibitors = new AbstractExhibitor[0];
         }
+		[System.Serializable]
+		public class Tuner {
+			public bool enableDpiScale = true;
+		}
         #endregion
     }
 }
