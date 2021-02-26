@@ -40,6 +40,7 @@ namespace ModelDrivenGUISystem.Examples {
 
         protected int selectedTab = 0;
         protected string[] tabNames = new string[0];
+		protected GUIContent[] tabContens = new GUIContent[0];
         protected string[] serializedNames = new string[0];
 
         protected System.IDisposable unirxLogger;
@@ -57,7 +58,8 @@ namespace ModelDrivenGUISystem.Examples {
 
                 var exhibitors = exhitFolder.exhibitors;
                 tabNames = exhibitors.Select(v => v.Name).ToArray();
-                var appName = Application.productName.SanitizeFilename();
+				tabContens = exhibitors.Select(v => new GUIContent(v.Name, v.RawData().GetType().GetTooltip())).ToArray();
+				var appName = Application.productName.SanitizeFilename();
                 var scene = SceneManager.GetActiveScene();
                 var sceneName = scene.name;
                 serializedNames = exhibitors
@@ -110,7 +112,7 @@ namespace ModelDrivenGUISystem.Examples {
             GUILayout.EndHorizontal();
             GUILayout.Label("", GUI.skin.horizontalSlider);
 
-            selectedTab = GUILayout.Toolbar(selectedTab, tabNames);
+            selectedTab = GUILayout.Toolbar(selectedTab, tabContens);
             var currExhibit = (0 <= selectedTab && selectedTab < exhibitors.Length)
                 ? exhibitors[selectedTab] : null;
             if (currExhibit != null) {
