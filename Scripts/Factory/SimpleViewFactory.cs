@@ -12,7 +12,9 @@ namespace ModelDrivenGUISystem.Factory {
 
     public class SimpleViewFactory : IViewFactory {
         public virtual BaseView CreateClassView(IValue<object> model, CustomData customData = null) {
-            return new ClassView();
+			return new ClassView() {
+				CustomData = customData,
+			};
         }
 
         public virtual BaseView CreateStringView(IValue<string> model, CustomData customData = null) {

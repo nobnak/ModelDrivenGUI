@@ -16,7 +16,7 @@ namespace ModelDrivenGUISystem {
         public const string CD_MODEL = "Model";
         public const string CD_ATTRIBUTES = "Attributes";
 
-        public static BaseView GenerateClassView(IValue<object> parentModel, IViewFactory viewFactory) {
+        public static BaseView GenerateClassView(IValue<object> parentModel, IViewFactory viewFactory, bool isRoot = true) {
             var classType = parentModel.Value.GetType();
             var customData = classType.GenerateCustomData();
             var views = new List<BaseView>();
@@ -32,8 +32,12 @@ namespace ModelDrivenGUISystem {
             }
 
             var parentTitle = classType.GetTitle();
+			var parentTooltip = classType.GetTooltip();
+			if (isRoot)
+				customData[ClassView.KEY_EXTRUDE_CHILDREN] = true;
             var parentView = viewFactory.CreateClassView(parentModel, customData);
             parentView.Title = parentTitle;
+			parentView.Tooltip = parentTooltip;
             parentView.Children = views;
             return parentView;
         }
@@ -163,7 +167,7 @@ namespace ModelDrivenGUISystem {
                 case DataSectionEnum.Class_UserDefined: {
                         var model = modelFactory.CreateValue<object>();
                         if (model.Value != null) {
-                            var view = GenerateClassView(model, viewFactory);
+                            var view = GenerateClassView(model, viewFactory, false);
 							view.Title = title;
 							view.Tooltip = tooltip;
 							yield return view;
