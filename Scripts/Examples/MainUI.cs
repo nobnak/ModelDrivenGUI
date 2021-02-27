@@ -17,6 +17,10 @@ using UniRx.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace ModelDrivenGUISystem.Examples {
 
     [ExecuteAlways]
@@ -94,6 +98,14 @@ namespace ModelDrivenGUISystem.Examples {
 
 			if (tuner.enableDpiScale) {
 				var scale = Screen.dpi / 96f;
+#if UNITY_EDITOR
+				var typeGameView = System.Type.GetType("UnityEditor.GameView,UnityEditor");
+				var gameView = EditorWindow.GetWindow(typeGameView);
+				var propLowRes = typeGameView.GetProperty("lowResolutionForAspectRatios");
+				var isLowRes = (bool)propLowRes.GetValue(gameView);
+				if (isLowRes)
+					scale *= 0.5f;
+#endif
 				GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), Vector2.zero);
 			}
 
