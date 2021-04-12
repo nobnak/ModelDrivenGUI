@@ -16,6 +16,7 @@ using UniRx;
 using UniRx.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using nobnak.Gist.Extensions.ScreenExt;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -97,28 +98,19 @@ namespace ModelDrivenGUISystem.Examples {
                 return;
 
 			if (tuner.enableDpiScale) {
-				var scale = Screen.dpi / 96f;
-#if UNITY_EDITOR
-				var typeGameView = System.Type.GetType("UnityEditor.GameView,UnityEditor");
-				var gameView = EditorWindow.GetWindow(typeGameView);
-				var propLowRes = typeGameView.GetProperty("lowResolutionForAspectRatios");
-				var isLowRes = (bool)propLowRes.GetValue(gameView);
-				if (isLowRes)
-					scale *= 0.5f;
-#endif
-				GUIUtility.ScaleAroundPivot(new Vector2(scale, scale), Vector2.zero);
+				ScreenExtension.ScaleGUIBasedOnDpi();
 			}
 
-            windowRect = GUILayout.Window(GetInstanceID(), windowRect, Window, name);
+			windowRect = GUILayout.Window(GetInstanceID(), windowRect, Window, name);
 
             var currSize = windowRect.size;
             currSize.x += Mathf.Max(0f, scrollSizeDiff.x);
             windowRect.size = currSize;
         }
-        #endregion
+		#endregion
 
-        #region member
-        protected void Window(int id) {
+		#region member
+		protected void Window(int id) {
             var exhibitors = exhitFolder.exhibitors;
             GUILayout.BeginVertical();
 
