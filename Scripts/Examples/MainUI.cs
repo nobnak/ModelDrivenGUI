@@ -17,6 +17,7 @@ using UniRx.Diagnostics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using nobnak.Gist.Extensions.ScreenExt;
+using ModelDrivenGUISystem.Extensions.GUIExt;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -134,20 +135,7 @@ namespace ModelDrivenGUISystem.Examples {
 
             GUILayout.EndVertical();
 
-			if (!string.IsNullOrWhiteSpace(GUI.tooltip)) {
-				var cont = new GUIContent(GUI.tooltip);
-				var size = GUI.skin.label.CalcSize(cont);
-				var pos = Event.current.mousePosition;
-				pos.y -= size.y;
-				var rectTooltip = new Rect(pos, size);
-
-				var bgcolor = GUI.backgroundColor;
-				GUI.backgroundColor = new Color(0f, 0f, 0f, 0.5f);
-				var style = new GUIStyle(GUI.skin.label);
-				style.normal.background = Texture2D.whiteTexture;
-				GUI.Label(rectTooltip, cont, style);
-				GUI.backgroundColor = bgcolor;
-			}
+			GUIExtension.DrawTooltips();
 
 			GUI.DragWindow();
 		}
