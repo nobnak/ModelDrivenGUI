@@ -35,9 +35,8 @@ namespace ModelDrivenGUISystem.Examples {
         protected FolderPath folderPath = new FolderPath();
 		[SerializeField]
 		protected Tuner tuner = new Tuner();
-
 		[SerializeField]
-        protected BoolEvent visibility = new BoolEvent();
+		protected Events events = new Events();
 
         [SerializeField]
         protected KeycodeToggle uiVisibility = new KeycodeToggle(KeyCode.C);
@@ -166,7 +165,7 @@ namespace ModelDrivenGUISystem.Examples {
         }
 
         private void NotifyVisibility(bool v) {
-            visibility.Invoke(v);
+            events.Visibility.Invoke(GetInstanceID(), v);
         }
         private void NotifyVisibility() {
             NotifyVisibility(isActiveAndEnabled && uiVisibility.Visible);
@@ -211,6 +210,14 @@ namespace ModelDrivenGUISystem.Examples {
 		[System.Serializable]
 		public class Tuner {
 			public bool enableDpiScale = true;
+		}
+
+		[System.Serializable]
+		public class Events {
+			[System.Serializable]
+			public class UsageTokenEvent : UnityEngine.Events.UnityEvent<int, bool> { }
+
+			public UsageTokenEvent Visibility = new UsageTokenEvent();
 		}
         #endregion
     }
