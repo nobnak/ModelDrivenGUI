@@ -1,6 +1,7 @@
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 using CustomData = System.Collections.Generic.Dictionary<string, object>;
@@ -21,7 +22,10 @@ namespace ModelDrivenGUISystem.Factory {
         BaseView CreateVector2View(IValue<Vector2> model, CustomData customData = null);
         BaseView CreateVector3View(IValue<Vector3> model, CustomData customData = null);
         BaseView CreateVector4View(IValue<Vector4> model, CustomData customData = null);
-        BaseView CreateColorView(IValue<Color> model, CustomData customData = null);
+		BaseView CreateVector2View(IValue<float2> model, CustomData customData = null);
+		BaseView CreateVector3View(IValue<float3> model, CustomData customData = null);
+		BaseView CreateVector4View(IValue<float4> model, CustomData customData = null);
+		BaseView CreateColorView(IValue<Color> model, CustomData customData = null);
 		BaseView CreateVector2IntView(IValue<Vector2Int> model, CustomData customData = null);
 		BaseView CreateVector3IntView(IValue<Vector3Int> model, CustomData customData = null);
 

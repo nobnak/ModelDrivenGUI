@@ -4,6 +4,7 @@ using ModelDrivenGUISystem.Accessor;
 using ModelDrivenGUISystem.ValueWrapper;
 using ModelDrivenGUISystem.View;
 using ModelDrivenGUISystem.ViewModel;
+using Unity.Mathematics;
 using UnityEngine;
 
 using CustomData = System.Collections.Generic.Dictionary<string, object>;
@@ -78,8 +79,29 @@ namespace ModelDrivenGUISystem.Factory {
                 Input = vm.Output,
                 CustomData = customData
             };
-        }
-        public virtual BaseView CreateColorView(IValue<Color> model, CustomData customData = null) {
+		}
+		public virtual BaseView CreateVector2View(IValue<float2> model, CustomData customData = null) {
+			var vm = new VectorViewModel<float2, float>(model, new Float2Accessor());
+			return new VectorView() {
+				Input = vm.Output,
+				CustomData = customData
+			};
+		}
+		public virtual BaseView CreateVector3View(IValue<float3> model, CustomData customData = null) {
+			var vm = new VectorViewModel<float3, float>(model, new Float3Accessor());
+			return new VectorView() {
+				Input = vm.Output,
+				CustomData = customData
+			};
+		}
+		public virtual BaseView CreateVector4View(IValue<float4> model, CustomData customData = null) {
+			var vm = new VectorViewModel<float4, float>(model, new Float4Accessor());
+			return new VectorView() {
+				Input = vm.Output,
+				CustomData = customData
+			};
+		}
+		public virtual BaseView CreateColorView(IValue<Color> model, CustomData customData = null) {
             var vm = new VectorViewModel<Color, float>(model, new ColorAccessor());
             return new VectorView() {
                 Input = vm.Output,

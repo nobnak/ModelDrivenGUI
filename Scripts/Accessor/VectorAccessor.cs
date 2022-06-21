@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.Accessor {
@@ -91,8 +92,95 @@ namespace ModelDrivenGUISystem.Accessor {
         public bool TryParse(string s, out float result) {
             return float.TryParse(s, out result);
         }
-    }
-    public class ColorAccessor : IVectorAccessor<Color, float> {
+	}
+	public class Float2Accessor : IVectorAccessor<float2, float> {
+		public int Count { get; protected set; }
+
+		public Float2Accessor() {
+			this.Count = 2;
+		}
+
+		public float2 Join(IEnumerable<float> elements) {
+			var vec = new float2();
+			var stream = elements.GetEnumerator();
+			for (var i = 0; i < Count && stream.MoveNext(); i++)
+				vec[i] = stream.Current;
+			return vec;
+		}
+		public float GetElement(ref float2 vector, int index) {
+			return vector[index];
+		}
+		public void SetElement(ref float2 vector, int index, float element) {
+			vector[index] = element;
+		}
+		public IEnumerable<float> Split(float2 vector) {
+			for (var i = 0; i < Count; i++)
+				yield return vector[i];
+		}
+
+		public bool TryParse(string s, out float result) {
+			return float.TryParse(s, out result);
+		}
+	}
+	public class Float3Accessor : IVectorAccessor<float3, float> {
+		public int Count { get; protected set; }
+
+		public Float3Accessor() {
+			this.Count = 3;
+		}
+
+		public float3 Join(IEnumerable<float> elements) {
+			var vec = new Vector3();
+			var stream = elements.GetEnumerator();
+			for (var i = 0; i < Count && stream.MoveNext(); i++)
+				vec[i] = stream.Current;
+			return vec;
+		}
+		public float GetElement(ref float3 vector, int index) {
+			return vector[index];
+		}
+		public void SetElement(ref float3 vector, int index, float element) {
+			vector[index] = element;
+		}
+		public IEnumerable<float> Split(float3 vector) {
+			for (var i = 0; i < Count; i++)
+				yield return vector[i];
+		}
+
+		public bool TryParse(string s, out float result) {
+			return float.TryParse(s, out result);
+		}
+	}
+	public class Float4Accessor : IVectorAccessor<float4, float> {
+		public int Count { get; protected set; }
+
+		public Float4Accessor() {
+			this.Count = 4;
+		}
+
+		public float4 Join(IEnumerable<float> elements) {
+			var vec = new Vector4();
+			var stream = elements.GetEnumerator();
+			for (var i = 0; i < Count && stream.MoveNext(); i++)
+				vec[i] = stream.Current;
+			return vec;
+		}
+		public float GetElement(ref float4 vector, int index) {
+			return vector[index];
+		}
+		public void SetElement(ref float4 vector, int index, float element) {
+			vector[index] = element;
+		}
+		public IEnumerable<float> Split(float4 vector) {
+			for (var i = 0; i < Count; i++)
+				yield return vector[i];
+		}
+
+		public bool TryParse(string s, out float result) {
+			return float.TryParse(s, out result);
+		}
+	}
+	public class ColorAccessor : IVectorAccessor<Color, float> {
         public int Count { get; protected set; }
 
         public ColorAccessor() {

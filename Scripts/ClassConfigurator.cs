@@ -7,6 +7,7 @@ using nobnak.Gist.DocSys;
 using nobnak.Gist.Extensions.CustomAttrExt;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.Mathematics;
 using UnityEngine;
 using CustomData = System.Collections.Generic.Dictionary<string, object>;
 
@@ -141,7 +142,32 @@ namespace ModelDrivenGUISystem {
 								yield return view;
 								break;
 							}
-					}
+
+						case VectorTypeEnum.Float2: {
+							var model = modelFactory.CreateValue<float2>();
+							var view = viewFactory.CreateVector2View(model, customData);
+							view.Title = title;
+							view.Tooltip = tooltip;
+							yield return view;
+							break;
+						}
+						case VectorTypeEnum.Float3: {
+							var model = modelFactory.CreateValue<float3>();
+							var view = viewFactory.CreateVector3View(model, customData);
+							view.Title = title;
+							view.Tooltip = tooltip;
+							yield return view;
+							break;
+						}
+						case VectorTypeEnum.Float4: {
+							var model = modelFactory.CreateValue<float4>();
+							var view = viewFactory.CreateVector4View(model, customData);
+							view.Title = title;
+							view.Tooltip = tooltip;
+							yield return view;
+							break;
+						}
+				}
 					break;
 				case DataSectionEnum.ValueType_VectorInt:
 					switch (fieldType.VectorType()) {

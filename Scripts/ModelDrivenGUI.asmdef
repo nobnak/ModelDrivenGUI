@@ -1,15 +1,18 @@
 {
     "name": "ModelDrivenGUI",
+    "rootNamespace": "",
     "references": [
+        "Unity.Mathematics",
         "nobnak.Gist",
         "UniRx"
     ],
-    "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

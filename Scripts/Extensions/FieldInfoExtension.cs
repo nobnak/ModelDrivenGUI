@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
@@ -46,6 +47,9 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
                         || t == typeof(Vector3)
                         || t == typeof(Vector4)
                         || t == typeof(Color)
+						|| t == typeof(float2)
+						|| t == typeof(float3)
+						|| t == typeof(float4)
 						)
                         return DataSectionEnum.ValueType_Vector;
                     else if (t == typeof(Vector2Int)
@@ -78,13 +82,21 @@ namespace ModelDrivenGUISystem.Extensions.FieldInfoExt {
                 t.IsArray, t.IsClass, t.IsEnum, t.IsPrimitive, t.IsValueType);
         }
         public static VectorTypeEnum VectorType(this System.Type t) {
-            if (t == typeof(Vector2))
-                return VectorTypeEnum.Vector2;
-            else if (t == typeof(Vector3))
-                return VectorTypeEnum.Vector3;
-            else if (t == typeof(Vector4))
-                return VectorTypeEnum.Vector4;
-            else if (t == typeof(Color))
+			if (t == typeof(Vector2))
+				return VectorTypeEnum.Vector2;
+			else if (t == typeof(Vector3))
+				return VectorTypeEnum.Vector3;
+			else if (t == typeof(Vector4))
+				return VectorTypeEnum.Vector4;
+
+			if (t == typeof(float2))
+				return VectorTypeEnum.Float2;
+			else if (t == typeof(float3))
+				return VectorTypeEnum.Float3;
+			else if (t == typeof(float4))
+				return VectorTypeEnum.Float4;
+
+			else if (t == typeof(Color))
                 return VectorTypeEnum.Color;
             else if (t == typeof(Vector2Int))
                 return VectorTypeEnum.Vector2Int;
