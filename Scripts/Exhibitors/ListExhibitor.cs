@@ -67,7 +67,11 @@ namespace ModelDrivenGUISystem.Exhibitors {
         }
         protected virtual void Clear() {
             var removelist = new List<ArtWorkType>(nodes);
-            foreach (var n in removelist) {
+#if UNITY_EDITOR
+			foreach (var n in parent.GetComponentsInChildren<ArtWorkType>())
+				if (n != parent && !removelist.Contains(n)) removelist.Add(n);
+#endif
+			foreach (var n in removelist) {
                 if (n == null)
                     continue;
                 Remove(n);
