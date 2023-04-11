@@ -33,7 +33,8 @@ namespace ModelDrivenGUISystem.Exhibitors {
         #endregion
 
         public virtual Transform Decode(Transform node, Exhibit info) {
-            node.gameObject.name = info.name;
+			var go = node.gameObject;
+            go.name = info.name;
             return Decode(node, info.node);
         }
         public virtual Transform Decode(Transform tr, Transform2DExhibitor.TransformData ndata) {

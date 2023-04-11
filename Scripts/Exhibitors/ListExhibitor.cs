@@ -49,7 +49,6 @@ namespace ModelDrivenGUISystem.Exhibitors {
         protected virtual void Add(ArtWorkType n) {
             n.gameObject.hideFlags = HideFlags.DontSave;
             n.transform.SetParent(parent, false);
-            n.hideFlags = HideFlags.DontSave;
             nodes.Add(n);
             n.CallbackSelf<IExhibitorListener>(l => l.ExhibitorOnParent(parent));
         }
@@ -67,16 +66,14 @@ namespace ModelDrivenGUISystem.Exhibitors {
         }
         protected virtual void Clear() {
             var removelist = new List<ArtWorkType>(nodes);
-#if UNITY_EDITOR
+#if false //UNITY_EDITOR
 			if (parent != null) {
 				foreach (var n in parent.GetComponentsInChildren<ArtWorkType>())
 					if (n != parent && !removelist.Contains(n)) removelist.Add(n);
 			}
 #endif
 			foreach (var n in removelist) {
-                if (n == null)
-                    continue;
-                Remove(n);
+                if (n != null) Remove(n);
 				n.DestroyGo();
             }
             nodes.Clear();
