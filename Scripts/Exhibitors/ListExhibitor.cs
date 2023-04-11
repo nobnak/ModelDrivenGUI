@@ -25,7 +25,6 @@ namespace ModelDrivenGUISystem.Exhibitors {
 
         #region Unity
         protected virtual void OnEnable() {
-            validator.Reset();
             validator.Validation += () => {
                 ReflectChangeOf(MVVMComponent.Model);
             };
@@ -38,8 +37,8 @@ namespace ModelDrivenGUISystem.Exhibitors {
             validator.Invalidate();
         }
         protected virtual void OnDisable() {
-            validator.Invalidate();
-            Clear();
+			validator.Reset();
+			Clear();
         }
         #endregion
 
@@ -58,7 +57,7 @@ namespace ModelDrivenGUISystem.Exhibitors {
         }
         protected virtual void Remove(ArtWorkType n) {
             nodes.Remove(n);
-            n.CallbackSelf<IExhibitorListener>(l => l.ExhibitorOnUnparent(parent));
+            if (n != null) n.CallbackSelf<IExhibitorListener>(l => l.ExhibitorOnUnparent(parent));
         }
         protected virtual void Removerange(IEnumerable<ArtWorkType> niter) {
             foreach (var n in niter)
@@ -73,7 +72,7 @@ namespace ModelDrivenGUISystem.Exhibitors {
 			}
 #endif
 			foreach (var n in removelist) {
-                if (n != null) Remove(n);
+                Remove(n);
 				n.DestroyGo();
             }
             nodes.Clear();
@@ -99,7 +98,7 @@ namespace ModelDrivenGUISystem.Exhibitors {
             ResetNodesFromData();
         }
         public override void ApplyViewModelToModel() {
-            ResetNodesFromData();
+            //ResetNodesFromData();
         }
         public override void ResetView() {
             if (view != null) {
