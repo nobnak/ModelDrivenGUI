@@ -98,7 +98,7 @@ namespace ModelDrivenGUISystem.Exhibitors {
             ResetNodesFromData();
         }
         public override void ApplyViewModelToModel() {
-            //ResetNodesFromData();
+            ResetNodesFromData();
         }
         public override void ResetView() {
             if (view != null) {
