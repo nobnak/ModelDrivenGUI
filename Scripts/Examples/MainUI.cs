@@ -40,6 +40,7 @@ namespace ModelDrivenGUISystem.Examples {
 
         [SerializeField]
         protected KeycodeToggle uiVisibility = new KeycodeToggle(KeyCode.C);
+		protected bool currUIVisibility;
 
         protected Validator validator = new Validator();
         protected Rect windowRect = new Rect(10, 10, 300f, 500f);
@@ -165,7 +166,10 @@ namespace ModelDrivenGUISystem.Examples {
         }
 
         private void NotifyVisibility(bool v) {
-            events.Visibility.Invoke(GetInstanceID(), v);
+			if (currUIVisibility != v) {
+				currUIVisibility = v;
+				events.Visibility?.Invoke(v);
+			}
         }
         private void NotifyVisibility() {
             NotifyVisibility(isActiveAndEnabled && uiVisibility.Visible);
@@ -214,10 +218,7 @@ namespace ModelDrivenGUISystem.Examples {
 
 		[System.Serializable]
 		public class Events {
-			[System.Serializable]
-			public class UsageTokenEvent : UnityEngine.Events.UnityEvent<int, bool> { }
-
-			public UsageTokenEvent Visibility = new UsageTokenEvent();
+			public UnityEngine.Events.UnityEvent<bool> Visibility = new UnityEngine.Events.UnityEvent<bool>();
 		}
         #endregion
     }
