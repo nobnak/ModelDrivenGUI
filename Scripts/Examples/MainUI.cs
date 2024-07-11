@@ -63,8 +63,6 @@ namespace ModelDrivenGUISystem.Examples {
 
             validator.Reset();
             validator.Validation += () => {
-                Debug.Log($"{name}-{GetType().Name} : Serialized to {folderPath.Folder}");
-
                 var exhibitors = exhitFolder.exhibitors;
                 tabNames = exhibitors.Select(v => v.Name).ToArray();
 				tabContens = exhibitors.Select(v => new GUIContent(v.Name, v.RawData().GetType().GetTooltip())).ToArray();
