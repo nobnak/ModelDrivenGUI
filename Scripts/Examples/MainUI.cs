@@ -18,6 +18,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using nobnak.Gist.Extensions.ScreenExt;
 using ModelDrivenGUISystem.Extensions.GUIExt;
+using UnityEngine.Events;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -166,7 +168,7 @@ namespace ModelDrivenGUISystem.Examples {
         private void NotifyVisibility(bool v) {
 			if (currUIVisibility != v) {
 				currUIVisibility = v;
-				events.Visibility?.Invoke(v);
+				events.onVisibilityChanged?.Invoke(GetInstanceID(), v);
 			}
         }
         private void NotifyVisibility() {
@@ -216,7 +218,7 @@ namespace ModelDrivenGUISystem.Examples {
 
 		[System.Serializable]
 		public class Events {
-			public UnityEngine.Events.UnityEvent<bool> Visibility = new UnityEngine.Events.UnityEvent<bool>();
+			public UnityEvent<int, bool> onVisibilityChanged = new();
 		}
         #endregion
     }
